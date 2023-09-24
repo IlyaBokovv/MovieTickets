@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary.Models.Models
 {
-    public class UserAddress
+    public class UserAddress : IEntityBase
     {
         public int Id { get; set; }
         public string Country { get; set; } = "";

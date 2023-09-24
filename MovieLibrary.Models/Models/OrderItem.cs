@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary.Models.Models
 {
-    public class OrderItem
+    public class OrderItem : IEntityBase
     {
         public int Id { get; set; }
         public int Amount { get; set; }

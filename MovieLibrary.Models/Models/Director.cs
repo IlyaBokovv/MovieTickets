@@ -7,7 +7,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MovieLibrary.Models.Models
 {
-    public class Director
+    public class Director : IEntityBase
     {
         public int Id { get; set; }
         public string FullName { get; set; } = "";

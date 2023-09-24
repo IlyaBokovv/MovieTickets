@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary.Models.Models
 {
-    public class Image
+    public class Image : IEntityBase
     {
         private static string defaultImagePath = "images/default_image.jpg";
         public int Id { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary.Models.Models
 {
-    public class Order
+    public class Order : IEntityBase
     {
         public int Id { get; set; }
         public string Email { get; set; } = "";

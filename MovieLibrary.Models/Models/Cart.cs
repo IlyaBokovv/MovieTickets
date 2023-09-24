@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary.Models.Models
 {
-    public class Cart
+    public class Cart : IEntityBase
     {
         public int Id { get; set; }
         public string Email { get; set; } = "";
