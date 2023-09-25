@@ -1,0 +1,10 @@
+﻿@using MovieLibrary.Models.Static;
+@model string
+@if (User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
+{
+    <div style="z-index: 1;" class="position-fixed shadow bottom-0 end-0 mb-4 me-4">
+        <a asp-controller=@Model asp-action="Create" class="w-auto btn btn-success">
+            <i class="bi bi-plus-circle me-1"></i>Add new item
+        </a>
+    </div>
+}

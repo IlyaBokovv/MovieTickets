@@ -13,7 +13,7 @@ namespace MovieLibrary.Models.Models
         public string FullName { get; set; } = "";
         public string Bio { get; set; } = "";
 
-        public int ImageId { get; set; }
+        public int? ImageId { get; set; }
 
         public IEnumerable<Movie> Movies { get; set; } = new List<Movie>();
         public Image Image { get; set; } = Image.DefaultImageFactory();

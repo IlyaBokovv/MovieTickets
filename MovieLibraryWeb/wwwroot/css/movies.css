@@ -1,0 +1,60 @@
+﻿.delete-movie-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    filter: brightness(100%);
+    width: fit-content;
+}
+
+.edit-movie-button {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: fit-content;
+    filter: brightness(100%);
+}
+
+.movie-poster {
+    transition: all 500ms ease;
+}
+
+.movie-poster-title {
+    color: white;
+    text-decoration: none;
+    font-size: xx-large;
+    font-weight: 600;
+    position: absolute;
+    bottom: 25%;
+    left: 16px;
+    transition: all 500ms ease;
+}
+
+.movie-poster-image {
+    filter: brightness(40%);
+    transition: all 500ms ease;
+}
+
+.movie-poster-cart-buton {
+    position: absolute;
+    bottom: 8px;
+    left: 33%;
+}
+
+
+
+
+.movie-poster-image:hover {
+    filter: brightness(100%);
+}
+
+.movie-poster:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    color: black;
+    cursor: pointer;
+}
+
+.movie-poster-title:hover {
+    color: lightblue;
+}

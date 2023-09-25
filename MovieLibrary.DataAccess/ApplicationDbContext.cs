@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MovieLibrary.DataAccess.Configurations;
 using MovieLibrary.Models.Models;
+using System;
 
 namespace MovieLibrary.DataAccess
 {
@@ -17,6 +18,9 @@ namespace MovieLibrary.DataAccess
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Image> Images { get; set; }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using MovieLibrary.Models.Models;
+@using MovieLibrary.Models.Static;
+@inject SignInManager<AppUser> SignInManager
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="flex-shrink-0 mt-lg-0 mt-3 me-5 dropdown">
+        <a href="#" class="d-block link-body-emphasis text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="~/images/default-pfp.png" alt="profile-picture" style="object-fit:cover;" width="40" height="40" class="rounded-circle">
+            @User!.Identity!.Name
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+            @if (User.IsInRole(UserRolesValues.User))
+            {
+                <li><a class="dropdown-item" asp-controller="Orders" asp-action="List">Orders</a></li>
+                <li><hr class="dropdown-divider"></li>
+            }
+            <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
+        </ul>
+    </div>
+}
+else
+{
+    <a class="btn btn-outline-success my-2 me-2 my-sm-0"
+       asp-controller="Account" asp-action="Login">
+        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+    </a>
+    <a class="btn btn-success my-2 my-sm-0"
+       asp-controller="Account" asp-action="Register">
+        Register
+    </a>
+}

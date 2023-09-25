@@ -19,7 +19,7 @@ namespace MovieLibrary.Models.Models
 
         public int DirectorId { get; set; }
         public int CinemaId { get; set; }
-        public int ImageId { get; set; }
+        public int? ImageId { get; set; }
 
         public IEnumerable<ActorMovie> ActorsMovies { get; set; } = new List<ActorMovie>();
         public Director Director { get; set; } = new Director();

@@ -18,10 +18,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MovieLibrary.DataAccess\MovieLibrary.DataAccess.csproj" />
+    <ProjectReference Include="..\Services\MovieLibrary.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
 
