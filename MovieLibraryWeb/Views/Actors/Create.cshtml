@@ -1,0 +1,48 @@
+﻿@model ActorVM
+@{
+    ViewData["Title"] = "Actors";
+}
+<div class="text-center">
+    <h2> Create a new actor</h2>
+</div>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <form enctype="multipart/form-data" asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group text-center my-2">
+                <img src="~/@Model.Image.ImagePath" class="rounded-circle image-default-size" id="ProfilePicturePreview" />
+            </div>
+            <div class="form-group my-2">
+                <label asp-for="Image.ImageFile" class="form-label">Actor's image</label>
+                <input asp-for="Image.ImageFile" id="imgInp" accept="image/*" class="form-control" />
+                <span asp-validation-for="Image.ImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <label asp-for="Bio" class="control-label"></label>
+                <textarea asp-for="Bio" class="form-control"></textarea>
+                <span asp-validation-for="Bio" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <input type="submit" class="btn btn-outline-success float-end" />
+                <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                ProfilePicturePreview.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+}

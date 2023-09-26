@@ -1,0 +1,33 @@
+﻿@using MovieLibrary.Models.Models;
+@model Actor
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="text-center">
+    <h1>
+        @Model.FullName
+    </h1>
+</div>
+<div class="container">
+    <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2">
+        <div class="text-center my-2">
+            <img class="rounded-circle image-default-size" src="~/@Model.Image.ImagePath" />
+        </div>
+        <div class="my-2">
+            <h4>Bio</h4>
+            <p>@Model.Bio</p>
+        </div>
+        <div class="my-2">
+            @if (User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
+            {
+                <a class="btn btn-outline-success float-end" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+            }
+            else
+            {
+                <a class="btn btn-outline-secondary" href='javascript:history.go(-1)'>Go Back</a>
+            }
+        </div>
+    </div>
+</div>

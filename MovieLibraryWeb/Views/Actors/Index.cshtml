@@ -1,0 +1,54 @@
+﻿@model IEnumerable<MovieLibrary.Models.Models.Actor>
+@{
+    ViewData["Title"] = "Actors";
+}
+<partial name="_CreateItem" model='"Actors"' />
+
+<table class="table table-hover container">
+    <thead class="text-center">
+        <tr>
+            <th scope="col" class="col-1">
+                Picture
+            </th>
+            <th scope="col" class="col-2">
+                Full Name
+            </th>
+            <th scope="col">
+                Bio
+            </th>
+            @if (User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
+            {
+                <th scope="col" class="col-2">
+                    Actions
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="text-center clickable-table-row" onclick="window.location.href = '@Url.Action("Details")/@item.Id';">
+                <td class="text-center">
+                    <img class="rounded-circle" style="width: 100px; height:100px;object-fit:cover;" src="~/@item.Image.ImagePath" )>
+                </td>
+                <td class="text-center align-middle">
+                    <b>@Html.DisplayFor(modelItem => item.FullName)</b>
+                </td>
+                <td class="align-middle">
+                    <p class="three-lines">@Html.DisplayFor(modelItem => item.Bio)</p>
+                </td>
+                @if (User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
+                {
+                    <td class="align-middle">
+                        <a class="btn btn-outline-primary m-2" asp-action="Edit" asp-route-id="@item.Id">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
