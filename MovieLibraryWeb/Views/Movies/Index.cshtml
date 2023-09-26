@@ -1,0 +1,56 @@
+﻿@using MovieLibrary.Models.Models;
+@using Microsoft.AspNetCore.Identity;
+@using MovieLibrary.Models.Static;
+@inject SignInManager<AppUser> SignInManager
+@model IEnumerable<Movie>
+@{
+    ViewData["Title"] = "Movies";
+}
+@if (SignInManager.IsSignedIn(User) && !User.IsInRole(UserRolesValues.Admin))
+{
+    @await Component.InvokeAsync("CartSummary")
+}
+<partial name="_CreateItem" model='"Movies"' />
+<div class="row">
+    @foreach (var movie in Model)
+    {
+        <div class="col-lg-4 p-4 col-md-6 col-sm-8 offset-sm-2 m-0" onclick="goToDetails(@movie.Id)">
+            <div class="card movie-poster shadow-lg">
+                <img src="~/@movie!.Image.ImagePath" class="card-img-top movie-poster-image" style="max-height: 400px; object-fit: cover;" alt="movie poster">
+                @if (User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
+                {
+                    <a class="btn btn-primary edit-movie-button" asp-action="Edit" asp-route-id="@movie?.Id">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+
+                    <a class="btn btn-danger delete-movie-button" asp-action="Delete" asp-route-id="@movie?.Id">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                }
+                <a class="movie-poster-title" asp-action="Details" asp-route-id="@movie?.Id">
+                    @movie!.Name
+                </a>
+                @if (!User.IsInRole(UserRolesValues.Admin))
+                {
+                    <a class="btn btn-lg btn-success movie-poster-cart-buton" asp-controller="Orders" asp-action="AddToCart" asp-route-id="@movie?.Id">
+                        <i class="bi bi-cart-plus"></i>
+                        (@movie!.Price.ToString("c"))
+                    </a>
+                }
+
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function goToDetails(id) {
+            window.location.href = "@Url.Action("Details")/" + id;
+        }
+    </script>
+}
+
+
+
+

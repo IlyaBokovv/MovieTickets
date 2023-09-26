@@ -1,0 +1,43 @@
+﻿@using MovieLibrary.Models.ViewModels;
+@model IEnumerable<UserVM>
+@{
+    ViewData["Title"] = "Users";
+}
+<div class="row">
+    <div class="col-sm-12 offset-sm-0 col-md-10 offset-md-1">
+        <table class="table table-hover">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr class="text-center align-middle clickable-table-row" onclick="window.location.href = '@Url.Action("Details")/@user.Id';">
+                        <td>
+                            @user.Id
+                        </td>
+                        <td>
+                            @user.FullName
+                        </td>
+                        <td>
+                            @user.PhoneNumber
+                        </td>
+                        <td>
+                            @user.Email
+                        </td>
+                        <td>
+                            @user.UserName
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

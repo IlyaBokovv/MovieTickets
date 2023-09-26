@@ -4,12 +4,12 @@ namespace MovieLibrary.Models.ViewModels
 {
     public class LoginVM
     {
-        [EmailAddress, Required(ErrorMessage = "Email address is required.")]
-        [MinLength(1, ErrorMessage = "Invalid email")]
+        [EmailAddress, Required(ErrorMessage = "Email обязателен для заполнения")]
+        [MinLength(1, ErrorMessage = "Неверный email")]
         public string Email { get; set; } = "";
 
-        [Required(ErrorMessage = "Password is required."), DataType(DataType.Password)]
-        [MinLength(6, ErrorMessage = "Invalid password")]
+        [Required(ErrorMessage = "Пароль обязателен для заполнения"), DataType(DataType.Password)]
+        [MinLength(6, ErrorMessage = "Неверный пароль")]
         public string Password { get; set; } = "";
     }
 }

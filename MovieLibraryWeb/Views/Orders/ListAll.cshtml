@@ -1,0 +1,73 @@
+﻿@using MovieLibrary.Models.Models;
+@model List<Order>
+@{
+    ViewData["Title"] = "Orders";
+}
+<div class="text-center">
+    <h1>Orders</h1>
+</div>
+<div class="row">
+    <div class="col-sm-12 offset-sm-0 col-md-10 offset-md-1">
+        <table class="table">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">Id</th>
+                    <th scope="col">Items</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr class="text-center">
+                        <td class="align-middle"> @order.Id </td>
+                        <td class="align-middle">
+                            <ul class="list-unstyled">
+                                @foreach (var orderItem in order.OrderItems)
+                                {
+                                    <li>
+                                        <div class="alert alert-info">
+                                            <span class="badge bg-success">
+                                                @orderItem.Amount
+                                            </span>
+                                            [@orderItem.Price.ToString("c")] -
+                                            @orderItem.Movie.Name
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                        <td class="align-middle">
+                            @order.GetTotalPrice().ToString("c")
+                        </td>
+                        <td class="align-middle">
+                            <a asp-controller="Users" asp-action="Details" asp-route-id="@order.AppUser.Id">
+                                @order.AppUser.UserName
+                            </a>
+                        </td>
+                        <td class="align-middle">
+
+                            @if (order.OrderStatus == MovieLibrary.Models.Enums.OrderStatus.OnGoing)
+                            {
+                                <span class="badge bg-info mb-3">@order.GetOrderStatusAsString()</span>
+                                <form asp-action="MarkDone" method="post">
+                                    <input type="hidden" name="Id" value="@order.Id" />
+                                    <input type="submit" value="Mark As Done" class="btn btn-success" />
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">@order.GetOrderStatusAsString()</span>
+                            }
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

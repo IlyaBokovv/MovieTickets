@@ -85,10 +85,7 @@ namespace MovieLibraryWeb.Controllers
                 UserAddress = new UserAddress()
                 {
                     Country = registerVM.Country,
-                    State = registerVM.State,
                     City = registerVM.City,
-                    Street = registerVM.Street,
-                    ZipCode = registerVM.ZipCode
                 }
             };
             var res = await _userManager.CreateAsync(user, registerVM.Password);

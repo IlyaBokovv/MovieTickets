@@ -7,11 +7,11 @@ namespace MovieLibrary.Models.ViewModels
     public class CinemaVM
     {
         [Required]
-        [DisplayName("Name")]
+        [DisplayName("Название")]
         public string Name { get; set; } = "";
 
         [Required]
-        [DisplayName("Description")]
+        [DisplayName("Описание")]
         public string Description { get; set; } = "";
         public Image Image { get; set; } = new Image();
     }

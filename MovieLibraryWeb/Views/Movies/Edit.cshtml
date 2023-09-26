@@ -1,0 +1,93 @@
+﻿@using MovieLibrary.Models.Enums;
+@using MovieLibrary.Models.ViewModels;
+@model MovieVM
+@{
+    ViewData["Title"] = "Edit movie";
+}
+<div class="text-center">
+    <h2>Edit Movie</h2>
+</div>
+<div class="container">
+    <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group text-center my-2">
+                <img src="~/@Model.Image.ImagePath" class="rounded-circle image-default-size" id="ProfilePicturePreview" />
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StratDate" class="control-label"></label>
+                        <input asp-for="StratDate" type="date" class="form-control" />
+                        <span asp-validation-for="StratDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EndDate" class="control-label"></label>
+                        <input asp-for="EndDate" type="date" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" type="number" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group my-2">
+                        <label asp-for="Image.ImageFile" class="form-label">Cinema's logo</label>
+                        <input asp-for="Image.ImageFile" id="imgInp" accept="image/*" class="form-control" />
+                        <span asp-validation-for="Image.ImageFile" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CinemaId" class="control-label"></label>
+                        <select asp-for="CinemaId" asp-items="ViewBag.Cinemas" class="form-select"></select>
+                        <span asp-validation-for="CinemaId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MovieCategory" class="control-label"></label>
+                        <select asp-for="MovieCategory" asp-items="Html.GetEnumSelectList<MovieCategory>()" class="form-select"></select>
+                        <span asp-validation-for="MovieCategory" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DirectorId" class="control-label"></label>
+                        <select asp-for="DirectorId" asp-items="ViewBag.Producers" class="form-select"></select>
+                        <span asp-validation-for="DirectorId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ActorIds" class="control-label"></label>
+                        <select asp-for="ActorIds" asp-items="ViewBag.Actors" class="form-select" multiple></select>
+                        <span asp-validation-for="ActorIds" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control" multiple></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Edit" class="btn btn-outline-success float-end" />
+                <a class="btn btn-outline-secondary" asp-action="Index">Show all</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                ProfilePicturePreview.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+}

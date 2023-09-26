@@ -1,0 +1,112 @@
+﻿@using MovieLibrary.Models.ViewModels;
+@model (CartVM, string)
+@{
+    ViewData["Title"] = "Cart Summary";
+}
+<div class="text-center">
+    <h1>Cart Summary</h1>
+</div>
+<div class="row">
+    <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Movie
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Subtotal
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Item1.Cart.CartItems)
+                {
+                    <tr>
+                        <td class="align-middle">@item.Amount</td>
+                        <td class="align-middle">@item.Movie.Name</td>
+                        <td class="align-middle">@item.Movie.Price.ToString("c")</td>
+                        <td class="align-middle">@item.Price.ToString("c")</td>
+                        <td class="align-middle button-group">
+                            <a class="text-danger btn" asp-controller="Orders" asp-action="RemoveItemFromCart" asp-route-id="@item.Movie.Id">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cart-dash" viewBox="0 0 16 16">
+                                    <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4z" />
+                                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                </svg>
+                            </a>
+                            <a class="text-success btn" asp-controller="Orders" asp-action="AddToCart" asp-route-id="@item.Movie.Id">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                                    <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z" />
+                                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    <td><b>Total:</b></td>
+                    <td>@Model.Item1.Total.ToString("c")</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="text-end">
+            <div>
+                <a class="btn btn-outline-success" asp-controller="Movies" asp-action="Index">
+                    Add more items
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="btn col-sm-10 offset-sm-1 col-md-8 offset-md-2" id="paypal-button-container"></div>
+    </div>
+
+</div>
+@section Scripts {
+    <script src=@($"https://www.paypal.com/sdk/js?client-id={Model.Item2}")></script>
+
+    <script>
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                tagline: 'false'
+            },
+            createOrder: (data, actions) => {
+                return fetch("@Url.Action("Order")", {
+                    method: "post",
+                }).then((response) => {
+                    if (!response.ok) {
+                        return response.json().then(error => { throw error; });
+                    }
+
+                    return response.json();
+                }).then((order) => order.id)
+                    .catch(error => alert(error.message));
+            },
+            onApprove: (data, actions) => {
+                return fetch(`@Url.Action("Capture")?orderId=${data.orderID}`, {
+                    method: "post",
+                }).then((response) => {
+                    if (!response.ok) {
+                        return response.json().then(error => { throw error; });
+                    }
+
+                    window.location.href = "@Url.Action("Success")";
+                }).catch(error => alert(error.message));
+            }
+        }).render('#paypal-button-container');
+    </script>
+}

@@ -11,10 +11,7 @@ namespace MovieLibrary.DataAccess.Configurations
             builder.HasKey(a => a.Id);
 
             builder.Property(a => a.Country).IsRequired();
-            builder.Property(a => a.State).IsRequired();
             builder.Property(a => a.City).IsRequired();
-            builder.Property(a => a.Street).IsRequired();
-            builder.Property(a => a.ZipCode).IsRequired();
 
 
             builder.HasOne<AppUser>()

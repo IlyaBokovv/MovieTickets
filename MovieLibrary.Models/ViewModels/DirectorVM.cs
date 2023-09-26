@@ -7,7 +7,7 @@ namespace MovieLibrary.Models.ViewModels
     public class DirectorVM
     {
         [Required]
-        [DisplayName("Full Name")]
+        [DisplayName("Имя")]
         public string FullName { get; set; } = "";
 
         [Required]
