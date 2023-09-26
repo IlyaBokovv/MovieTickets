@@ -16,7 +16,7 @@ namespace MovieLibrary.Models.ViewModels
         public string FullName { get; set; } = "";
 
         [Required]
-        [DisplayName("Bio")]
+        [DisplayName("Биография")]
         public string Bio { get; set; } = "";
         public Image Image { get; set; } = new Image();
     }
