@@ -1,9 +1,10 @@
-﻿@using MovieLibrary.Models.Static;
-@model IEnumerable<MovieLibrary.Models.Models.Actor>
+﻿@using MovieLibrary.Models.Models;
+@using MovieLibrary.Models.Static;
+@model IEnumerable<Director>
 @{
-    ViewData["Title"] = "Actors";
+    ViewData["Title"] = "Directors";
 }
-<partial name="_CreateItem" model='"Actors"' />
+<partial name="_CreateItem" model='"Directors"' />
 
 <table class="table table-hover container">
     <thead class="text-center">

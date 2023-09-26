@@ -22,7 +22,6 @@ namespace mvc.Controllers
             return View(cinemas);
         }
         [AllowAnonymous]
-        // GET: Cinemas/Details/{id}
         public async Task<IActionResult> Details(int id)
         {
             var cinema = await _cinemaService.GetByIdAsync(id, trackChanges: false, d => d.Image);
@@ -33,7 +32,6 @@ namespace mvc.Controllers
             return View("NotFound");
         }
 
-        // Get: Cinemas/Create
         public IActionResult Create()
         {
             return View(new CinemaVM());
@@ -56,7 +54,6 @@ namespace mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Cinemas/Edit/{id}
         public async Task<IActionResult> Edit(int id)
         {
             var cinema = await _cinemaService.GetByIdAsync(id, trackChanges: false, d => d.Image);
@@ -78,7 +75,6 @@ namespace mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Cinemas/Delete/{id}
         public async Task<IActionResult> Delete(int id)
         {
             var cinema = await _cinemaService.GetByIdAsync(id, trackChanges: false, d => d.Image);

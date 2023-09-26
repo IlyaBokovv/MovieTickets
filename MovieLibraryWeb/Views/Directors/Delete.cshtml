@@ -1,12 +1,12 @@
 ﻿@using MovieLibrary.Models.Models;
-@model Cinema
+@model Director
 @{
-    ViewData["Title"] = "Delete cinema";
+    ViewData["Title"] = "Delete director";
 }
 
-<div class="form-group text-center">
+<div class="text-center">
     <h2>
-        Are you sure you want to delete the following cinema?
+        Are you sure you want to delete the following director?
     </h2>
 </div>
 <div class="container">
@@ -14,10 +14,10 @@
         <div class="text-center my-2">
             <img class="rounded-circle image-default-size" src="~/@Model.Image.ImagePath" />
         </div>
-        <h1 class="text-center">@Model.Name</h1>
+        <h1 class="text-center">@Model.FullName</h1>
         <div class="my-2">
-            <h4>Description</h4>
-            <p>@Model.Description</p>
+            <h4>Bio</h4>
+            <p>@Model.Bio</p>
         </div>
         <div class="my-2">
             <form asp-action="DeleteConfirmed">

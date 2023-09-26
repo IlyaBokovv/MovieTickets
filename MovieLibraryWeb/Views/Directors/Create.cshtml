@@ -1,36 +1,36 @@
-﻿@using MovieLibrary.Models.Models;
-@model Actor
-
+﻿@using MovieLibrary.Models.ViewModels;
+@model DirectorVM
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create Director";
 }
-
-<div class="container">
-    <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2">
-        <form enctype="multipart/form-data" asp-action="Edit" method="post">
+<div class="text-center">
+    <h2>Create new director</h2>
+</div>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger">
             </div>
             <div class="form-group text-center my-2">
-                <img class="rounded-circle" id="ProfilePicturePreview" src="~/@Model.Image.ImagePath" 
-                style="width: 200px; height:200px; object-fit:cover;" id="ProfilePicturePreview" />
+                <img src="~/@Model.Image.ImagePath" class="rounded-circle image-default-size" id="ProfilePicturePreview" />
             </div>
             <div class="form-group my-2">
-                <label asp-for="Image.ImageFile" class="form-label">Actor's image</label>
+                <label asp-for="Image.ImageFile" class="form-label">Director's image</label>
                 <input asp-for="Image.ImageFile" id="imgInp" accept="image/*" class="form-control" />
                 <span asp-validation-for="Image.ImageFile" class="text-danger"></span>
             </div>
             <div class="form-group my-2">
-                <label asp-for="FullName" class="control-label"></label>
-                <input asp-for="FullName" value=@Model.FullName class="form-control" />
+                <label asp-for="FullName" class="control-label">Full Name</label>
+                <input asp-for="FullName" class="form-control" />
                 <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
             <div class="form-group my-2">
                 <label asp-for="Bio" class="control-label"></label>
-                <textarea asp-for="Bio" value=@Model.Bio class="form-control"></textarea>
+                <textarea asp-for="Bio" class="form-control"></textarea>
                 <span asp-validation-for="Bio" class="text-danger"></span>
             </div>
             <div class="form-group my-2">
-                <input value="Save" type="submit" class="btn btn-outline-success float-end" />
+                <input type="submit" class="btn btn-outline-success float-end" />
                 <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
             </div>
         </form>
