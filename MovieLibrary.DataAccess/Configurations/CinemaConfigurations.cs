@@ -12,7 +12,7 @@ namespace MovieLibrary.DataAccess.Configurations
 
             builder.Property(c => c.Name).IsRequired();
             builder.Property(c => c.Id).IsRequired();
-            builder.Property(c => c.Description).IsRequired();
+            builder.Property(c => c.Description).IsRequired(false);
 
         }
     }

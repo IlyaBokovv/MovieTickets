@@ -12,7 +12,7 @@ namespace MovieLibrary.Models.ViewModels
 
         [Required]
         [DisplayName("Описание")]
-        public string Description { get; set; } = "";
+        public string? Description { get; set; } = "";
         public Image Image { get; set; } = new Image();
     }
 }

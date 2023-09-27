@@ -12,10 +12,10 @@
         <ul class="dropdown-menu text-small shadow">
             @if (User.IsInRole(UserRolesValues.User))
             {
-                <li><a class="dropdown-item" asp-controller="Orders" asp-action="List">Orders</a></li>
+                <li><a class="dropdown-item" asp-controller="Orders" asp-action="List">Ваши заказы</a></li>
                 <li><hr class="dropdown-divider"></li>
             }
-            <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
+            <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Выйти</a></li>
         </ul>
     </div>
 }
@@ -23,12 +23,11 @@ else
 {
     <a class="btn btn-outline-success my-2 me-2 my-sm-0"
        asp-controller="Account" asp-action="Login">
-        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+        <i class="bi bi-box-arrow-in-right me-1"></i>Войти в аккаунт
     </a>
     <a class="btn btn-success my-2 my-sm-0"
        asp-controller="Account" asp-action="Register">
         <i class="bi bi-r-square-fill"></i>
-
-        Register
+        Регистрация
     </a>
 }

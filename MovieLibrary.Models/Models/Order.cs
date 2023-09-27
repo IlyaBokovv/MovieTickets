@@ -25,11 +25,11 @@ namespace MovieLibrary.Models.Models
         {
             if (OrderStatus == OrderStatus.OnGoing)
             {
-                return "On Going";
+                return "В обработке";
             }
             else
             {
-                return "Done";
+                return "Заказ выполнен";
             }
         }
     }

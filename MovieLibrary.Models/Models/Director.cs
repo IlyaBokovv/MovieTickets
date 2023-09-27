@@ -11,8 +11,7 @@ namespace MovieLibrary.Models.Models
     {
         public int Id { get; set; }
         public string FullName { get; set; } = "";
-        public string Bio { get; set; } = "";
-
+        public string? Bio { get; set; } = "";
         public int? ImageId { get; set; }
 
         public IEnumerable<Movie> Movies { get; set; } = new List<Movie>();
