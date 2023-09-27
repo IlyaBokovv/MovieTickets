@@ -1,7 +1,7 @@
 ﻿@using MovieLibrary.Models.Models;
 @model List<Order>
 @{
-    ViewData["Title"] = "Orders";
+    ViewData["Title"] = "Заказы";
 }
 <div class="text-center">
     <h1>Orders</h1>
@@ -12,10 +12,10 @@
             <thead>
                 <tr class="text-center">
                     <th scope="col">Id</th>
-                    <th scope="col">Items</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">User</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">Элементы</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Пользователь</th>
+                    <th scope="col">Статус</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,7 +54,7 @@
                                 <span class="badge bg-info mb-3">@order.GetOrderStatusAsString()</span>
                                 <form asp-action="MarkDone" method="post">
                                     <input type="hidden" name="Id" value="@order.Id" />
-                                    <input type="submit" value="Mark As Done" class="btn btn-success" />
+                                    <input type="submit" value="Отметить выполненым" class="btn btn-success" />
                                 </form>
                             }
                             else

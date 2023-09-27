@@ -20,7 +20,7 @@ namespace MovieLibrary.Services.Services
         }
         public async Task<Cart?> AddMovieToCartAsync(int movieId, string userId, string email)
         {
-            var cartTask = _db.Carts
+            var cartTask = await _db.Carts
                 .Where(c => c.UserId == userId && c.Email == email)
                 .Include(c => c.CartItems)
                 .FirstOrDefaultAsync();
@@ -30,7 +30,7 @@ namespace MovieLibrary.Services.Services
             var movie = await _db.Movies.FirstOrDefaultAsync(m => m.Id == movieId);
 
 
-            var cart = cartTask.Result;
+            var cart = cartTask;
 
             if (user == null)
             {
@@ -62,7 +62,7 @@ namespace MovieLibrary.Services.Services
                 }
                 _db.Carts.Entry(cart).State = EntityState.Modified;
                 await _db.SaveChangesAsync();
-                return cartTask.Result;
+                return cartTask;
             }
             cart = new Cart
             {
@@ -82,7 +82,7 @@ namespace MovieLibrary.Services.Services
                 .Include(c => c.CartItems)
                 .ThenInclude(ci => ci.Movie)
                 .FirstOrDefaultAsync(c => c.Email == email && c.UserId == userId);
-            var movie = cart!.CartItems.FirstOrDefault(ci => ci.Movie.Id == movieId);
+            var movie = await _db.Movies.FirstOrDefaultAsync(m => m.Id == movieId);
 
             if (movie == null || cart == null)
             {
@@ -97,6 +97,7 @@ namespace MovieLibrary.Services.Services
             else
             {
                 cartItem!.Amount--;
+                cartItem!.Price -= movie.Price;
                 _db.Carts.Entry(cart).State = EntityState.Modified;
             }
             await _db.SaveChangesAsync();
