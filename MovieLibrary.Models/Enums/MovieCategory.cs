@@ -8,11 +8,10 @@ namespace MovieLibrary.Models.Enums
 {
     public enum MovieCategory
     {
-        Horror,
-        Action,
-        Comedy,
-        Drama,
-        Documentary,
-        Cartoon
+        Ужасы,
+        Экшен,
+        Комедия,
+        Драма,
+        Мультфильмы
     }
 }

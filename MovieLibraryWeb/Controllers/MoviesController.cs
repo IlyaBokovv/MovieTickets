@@ -31,7 +31,6 @@ namespace MovieLibraryWeb.Controllers
             return View(movies);
         }
         [AllowAnonymous]
-        // GET: Movies/Details/{id}
         public async Task<IActionResult> Details(int id)
         {
             var movie = await _movieService
@@ -43,7 +42,6 @@ namespace MovieLibraryWeb.Controllers
             return View("NotFound");
         }
 
-        // GET: Movies/Create
         public async Task<IActionResult> Create()
         {
             var actors = await _actorService.GetAllAsync();
@@ -68,7 +66,6 @@ namespace MovieLibraryWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Movies/Edit/{id}
         public async Task<IActionResult> Edit(int id)
         {
             var movie = await _movieService
@@ -127,7 +124,6 @@ namespace MovieLibraryWeb.Controllers
             return View("Index", movies.Where(m => m.Name!.ToLower().Contains(searchString) || m.Description!.ToLower().Contains(searchString)));
         }
 
-        // GET: Movies/Delete/{id}
         public async Task<IActionResult> Delete(int id)
         {
             var movie = await _movieService.GetByIdAsync(id, trackChanges: false, m => m.Image);

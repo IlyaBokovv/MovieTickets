@@ -33,7 +33,7 @@ namespace MovieLibrary.Services.Services
             {
                 throw new InvalidOperationException("invalid actor id");
             }
-            if (actor.Image.ImageFile == null)
+            if (actor.Image!.ImageFile == null)
             {
                 actor.ImageId = oldImage.Id;
                 await UpdateAsync(actor);

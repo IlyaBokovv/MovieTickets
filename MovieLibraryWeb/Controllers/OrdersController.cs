@@ -108,43 +108,7 @@ namespace MovieLibraryWeb.Controllers
             }
             return RedirectToAction("ListAll");
         }
-        [HttpPost]
-        public async Task<IActionResult> Order(CancellationToken cancellationToken)
-        {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-            var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
-            if (userId == null || userEmail == null)
-            {
-                return View("NotFound");
-            }
-            var cart = await _cartService.GetUserCartAsync(userId, userEmail);
-            if (cart == null)
-            {
-                cart = new Cart();
-            }
-            try
-            {
-                // set the transaction price and currency
-                var price = cart.GetTotalPrice().ToString();
-                var currency = "RUB";
-
-                // "reference" is the transaction key
-                var reference = cart.Id.ToString();
-
-
-                return Ok(reference);
-            }
-            catch (Exception e)
-            {
-                var error = new
-                {
-                    e.GetBaseException().Message
-                };
-
-                return BadRequest(error);
-            }
-        }
-
+        
         [HttpPost]
         public async Task<IActionResult> Capture(string orderId, CancellationToken cancellationToken)
         {

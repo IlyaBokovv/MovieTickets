@@ -73,7 +73,7 @@ namespace MovieLibrary.Services.Services
             catch (Exception ex)
             {
                 await _db.DisposeAsync();
-                throw new Exception("Failed to add movie, pls try again.", ex);
+                throw new Exception("Failed to add movie, please try again.", ex);
             }
             return movie;
         }
@@ -134,7 +134,7 @@ namespace MovieLibrary.Services.Services
             catch (Exception ex)
             {
                 await _db.DisposeAsync();
-                throw new Exception("Failed to add movie, pls try again.", ex);
+                throw new Exception("Failed to add movie, please try again.", ex);
             }
             return oldMovie;
         }

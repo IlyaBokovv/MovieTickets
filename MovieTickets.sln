@@ -7,11 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibrary.DataAccess", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibrary.Models", "MovieLibrary.Models\MovieLibrary.Models.csproj", "{BCBCFEB9-4FFE-40B3-89CC-7A7A007D8F21}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibrary.Utility", "MovieLibrary.Utility\MovieLibrary.Utility.csproj", "{9450877F-DFB1-4D3B-9BBA-333202ACBA00}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibraryWeb", "MovieLibraryWeb\MovieLibraryWeb.csproj", "{BC177F48-1224-4856-9570-0DDFA842F5BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieLibrary.Services", "Services\MovieLibrary.Services.csproj", "{444B1E14-97FD-4569-BDC2-B66A7E691E27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibrary.Services", "Services\MovieLibrary.Services.csproj", "{444B1E14-97FD-4569-BDC2-B66A7E691E27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +25,6 @@ Global
 		{BCBCFEB9-4FFE-40B3-89CC-7A7A007D8F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCBCFEB9-4FFE-40B3-89CC-7A7A007D8F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCBCFEB9-4FFE-40B3-89CC-7A7A007D8F21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9450877F-DFB1-4D3B-9BBA-333202ACBA00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9450877F-DFB1-4D3B-9BBA-333202ACBA00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9450877F-DFB1-4D3B-9BBA-333202ACBA00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9450877F-DFB1-4D3B-9BBA-333202ACBA00}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BC177F48-1224-4856-9570-0DDFA842F5BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BC177F48-1224-4856-9570-0DDFA842F5BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC177F48-1224-4856-9570-0DDFA842F5BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
