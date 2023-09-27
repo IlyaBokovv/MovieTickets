@@ -1,12 +1,12 @@
 ﻿@using MovieLibrary.Models.Models;
 @model Movie
 @{
-    ViewData["Title"] = "Delete movie";
+    ViewData["Title"] = "Удалить фильм";
 }
 
 <div class="form-group text-center">
     <h2>
-        Are you sure you want to delete the following movie?
+        Вы уверены, что хотите удалить выбранный фильм?
     </h2>
 </div>
 <div class="container">
@@ -16,7 +16,7 @@
         </div>
         <h1 class="text-center">@Model.Name</h1>
         <div class="form-group my-2">
-            <h4>Description</h4>
+            <h4>Описание</h4>
             <p>
                 @Model.Description
             </p>
@@ -24,8 +24,8 @@
         <div class="form-group my-2">
             <form asp-action="DeleteConfirmed">
                 <input type="hidden" asp-for="Id" />
-                <input type="submit" value="Confirm" class="btn btn-danger float-end" />
-                <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+                <input type="submit" value="Удалить" class="btn btn-danger float-end" />
+                <a class="btn btn-outline-secondary" asp-action="Index">Отменить</a>
             </form>
         </div>
     </div>

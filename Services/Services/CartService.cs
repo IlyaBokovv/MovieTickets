@@ -25,20 +25,19 @@ namespace MovieLibrary.Services.Services
                 .Include(c => c.CartItems)
                 .FirstOrDefaultAsync();
 
-            var user = _db.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
-            var movie = _db.Movies.FirstOrDefaultAsync(m => m.Id == movieId);
+            var movie = await _db.Movies.FirstOrDefaultAsync(m => m.Id == movieId);
 
-            await Task.WhenAll(cartTask, user, movie);
 
             var cart = cartTask.Result;
 
-            if (user.Result == null)
+            if (user == null)
             {
                 return null;
             }
 
-            if (movie.Result == null)
+            if (movie == null)
             {
                 return cart;
             }
@@ -46,8 +45,8 @@ namespace MovieLibrary.Services.Services
             {
                 MovieId = movieId,
                 Amount = 1,
-                Price = movie.Result.Price,
-                Movie = movie.Result
+                Price = movie.Price,
+                Movie = movie
             };
             if (cart != null)
             {
@@ -55,7 +54,7 @@ namespace MovieLibrary.Services.Services
                 if (oldCartItem != null)
                 {
                     oldCartItem.Amount++;
-                    oldCartItem.Price += movie.Result.Price;
+                    oldCartItem.Price += movie.Price;
                 }
                 else
                 {
@@ -70,7 +69,7 @@ namespace MovieLibrary.Services.Services
                 CartItems = new List<CartItem> { cartItem },
                 UserId = userId,
                 Email = email,
-                AppUser = user.Result
+                AppUser = user
             };
             cartItem.Cart = cart;
             await _db.Carts.AddAsync(cart);

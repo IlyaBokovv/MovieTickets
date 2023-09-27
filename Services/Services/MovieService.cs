@@ -25,10 +25,9 @@ namespace MovieLibrary.Services.Services
 
         public async Task<Movie> AddMovieVMAsync(MovieVM movieVM)
         {
-            var directorTask = _db.Directors.FirstOrDefaultAsync(d => d.Id == movieVM.DirectorId);
-            var cinemaTask = _db.Cinemas.FirstOrDefaultAsync(d => d.Id == movieVM.CinemaId);
-            await Task.WhenAll(directorTask, cinemaTask);
-            if (directorTask.Result is null || cinemaTask.Result is null)
+            var directorTask = await _db.Directors.FirstOrDefaultAsync(d => d.Id == movieVM.DirectorId);
+            var cinemaTask = await _db.Cinemas.FirstOrDefaultAsync(d => d.Id == movieVM.CinemaId);
+            if (directorTask is null || cinemaTask is null)
             {
                 throw new InvalidOperationException("cinema or director is is not valid");
             }
@@ -37,13 +36,13 @@ namespace MovieLibrary.Services.Services
                 Name = movieVM.Name,
                 Price = movieVM.Price,
                 Description = movieVM.Description,
-                StratDate = movieVM.StratDate,
+                StratDate = movieVM.StartDate,
                 EndDate = movieVM.EndDate,
                 MovieCategory = movieVM.MovieCategory,
                 DirectorId = movieVM.DirectorId,
-                Director = directorTask.Result,
+                Director = directorTask,
                 CinemaId = movieVM.CinemaId,
-                Cinema = cinemaTask.Result
+                Cinema = cinemaTask
             };
             movie.Image.ImageFile = movieVM.Image.ImageFile;
             try
@@ -96,7 +95,7 @@ namespace MovieLibrary.Services.Services
             oldMovie.Name = movieVM.Name;
             oldMovie.Price = movieVM.Price;
             oldMovie.Description = movieVM.Description;
-            oldMovie.StratDate = movieVM.StratDate;
+            oldMovie.StratDate = movieVM.StartDate;
             oldMovie.EndDate = movieVM.EndDate;
             oldMovie.MovieCategory = movieVM.MovieCategory;
             oldMovie.DirectorId = movieVM.DirectorId;

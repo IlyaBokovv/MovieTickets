@@ -2,7 +2,7 @@
 @model Cinema
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактировать";
 }
 
 <div class="container">
@@ -15,23 +15,23 @@
                      style="width: 200px; height:200px; object-fit:cover;" id="ProfilePicturePreview" />
             </div>
             <div class="form-group my-2">
-                <label asp-for="Image.ImageFile" class="form-label">Director's image</label>
+                <label asp-for="Image.ImageFile" class="form-label">Изображение</label>
                 <input asp-for="Image.ImageFile" id="imgInp" accept="image/*" class="form-control" />
                 <span asp-validation-for="Image.ImageFile" class="text-danger"></span>
             </div>
             <div class="form-group my-2">
-                <label asp-for="Name" class="control-label">Full Name</label>
+                <label asp-for="Name" class="control-label">Имя</label>
                 <input asp-for="Name" value=@Model.Name class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group my-2">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description" class="control-label">Описание</label>
                 <textarea asp-for="Description" value=@Model.Description class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group my-2">
-                <input value="Save" type="submit" class="btn btn-outline-success float-end" />
-                <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                <input value="Сохранить" type="submit" class="btn btn-outline-success float-end" />
+                <a class="btn btn-outline-secondary" asp-action="Index">Назад к списку кинотеатров</a>
             </div>
         </form>
     </div>

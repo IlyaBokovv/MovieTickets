@@ -4,7 +4,7 @@
 @inject SignInManager<AppUser> SignInManager
 @model IEnumerable<Movie>
 @{
-    ViewData["Title"] = "Movies";
+    ViewData["Title"] = "Фильмы";
 }
 @if (SignInManager.IsSignedIn(User) && !User.IsInRole(UserRolesValues.Admin))
 {

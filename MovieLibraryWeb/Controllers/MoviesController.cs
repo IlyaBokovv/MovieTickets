@@ -46,13 +46,12 @@ namespace MovieLibraryWeb.Controllers
         // GET: Movies/Create
         public async Task<IActionResult> Create()
         {
-            var actors = _actorService.GetAllAsync();
-            var producers = _producerService.GetAllAsync();
-            var cinemas = _cinemaService.GetAllAsync();
-            await Task.WhenAll(actors, producers, cinemas);
-            ViewBag.Actors = new SelectList(actors.Result, "Id", "FullName");
-            ViewBag.Producers = new SelectList(producers.Result, "Id", "FullName");
-            ViewBag.Cinemas = new SelectList(cinemas.Result, "Id", "Name");
+            var actors = await _actorService.GetAllAsync();
+            var producers = await _producerService.GetAllAsync();
+            var cinemas = await _cinemaService.GetAllAsync();
+            ViewBag.Actors = new SelectList(actors, "Id", "FullName");
+            ViewBag.Producers = new SelectList(producers, "Id", "FullName");
+            ViewBag.Cinemas = new SelectList(cinemas, "Id", "Name");
             return View(new MovieVM());
         }
 
@@ -79,9 +78,9 @@ namespace MovieLibraryWeb.Controllers
                 return View("NotFound");
             }
 
-            var actors = _actorService.GetAllAsync();
-            var producers = _producerService.GetAllAsync();
-            var cinemas = _cinemaService.GetAllAsync();
+            var actors = await _actorService.GetAllAsync();
+            var producers = await _producerService.GetAllAsync();
+            var cinemas = await _cinemaService.GetAllAsync();
 
             var movieVm = new MovieVM()
             {
@@ -90,17 +89,16 @@ namespace MovieLibraryWeb.Controllers
                 Name = movie.Name,
                 Price = movie.Price,
                 Description = movie.Description,
-                StratDate = movie.StratDate,
+                StartDate = movie.StratDate,
                 EndDate = movie.EndDate,
                 MovieCategory = movie.MovieCategory,
                 DirectorId = movie.DirectorId,
                 CinemaId = movie.CinemaId,
                 ActorIds = movie.ActorsMovies!.Select(am => am.ActorId)
             };
-            await Task.WhenAll(actors, producers, cinemas);
-            ViewBag.Actors = new SelectList(actors.Result, "Id", "FullName");
-            ViewBag.Producers = new SelectList(producers.Result, "Id", "FullName");
-            ViewBag.Cinemas = new SelectList(cinemas.Result, "Id", "Name");
+            ViewBag.Actors = new SelectList(actors, "Id", "FullName");
+            ViewBag.Producers = new SelectList(producers, "Id", "FullName");
+            ViewBag.Cinemas = new SelectList(cinemas, "Id", "Name");
 
             return View(movieVm);
         }

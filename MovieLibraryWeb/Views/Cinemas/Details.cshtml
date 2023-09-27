@@ -2,7 +2,7 @@
 @using MovieLibrary.Models.Static;
 @model Cinema
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Детали";
 }
 
 <div class="text-center">
@@ -16,18 +16,18 @@
             <img class="rounded-circle image-default-size" src="~/@Model.Image.ImagePath" />
         </div>
         <div class="my-2">
-            <h4>Description</h4>
+            <h4>Описание</h4>
             <p>@Model.Description</p>
         </div>
         <div class="my-2">
             @if (User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
             {
-                <a class="btn btn-outline-success float-end" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-                <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                <a class="btn btn-outline-success float-end" asp-action="Edit" asp-route-id="@Model.Id">Редактировать</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Показать все</a>
             }
             else
             {
-                <a class="btn btn-outline-secondary" href='javascript:history.go(-1)'>Go Back</a>
+                <a class="btn btn-outline-secondary" href='javascript:history.go(-1)'>Назад к списку кинотеатров</a>
             }
         </div>
     </div>

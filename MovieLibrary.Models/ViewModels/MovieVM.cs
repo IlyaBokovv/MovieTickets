@@ -23,7 +23,7 @@ namespace MovieLibrary.Models.ViewModels
 
         [Required(ErrorMessage = "Время начала показа обязательно для заполнения")]
         [Display(Name = "Время начала показа")]
-        public DateTime StratDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         [Required(ErrorMessage = "Дата окончания показа обязательна для заполнения ")]
         [Display(Name = "Дата окончания показа")]

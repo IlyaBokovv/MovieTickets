@@ -2,7 +2,7 @@
 @using MovieLibrary.Models.Static;
 @model IEnumerable<Cinema>
 @{
-    ViewData["Title"] = "Cinemas";
+    ViewData["Title"] = "Кинотеатры";
 }
 <partial name="_CreateItem" model='"Cinemas"' />
 
@@ -10,18 +10,18 @@
     <thead class="text-center">
         <tr>
             <th scope="col" class="col-1">
-                Picture
+                Изображение
             </th>
             <th scope="col" class="col-2">
-                Name
+                Название
             </th>
             <th scope="col">
-                Description
+                Описание
             </th>
             @if (User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
             {
                 <th scope="col" class="col-2">
-                    Actions
+                    Действия
                 </th>
             }
         </tr>

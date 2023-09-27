@@ -10,18 +10,18 @@
     <thead class="text-center">
         <tr>
             <th scope="col" class="col-1">
-                Picture
+                Изображение
             </th>
             <th scope="col" class="col-2">
-                Full Name
+                Имя
             </th>
             <th scope="col">
-                Bio
+                Биография
             </th>
             @if (User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
             {
                 <th scope="col" class="col-2">
-                    Actions
+                    Действия
                 </th>
             }
         </tr>

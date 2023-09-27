@@ -2,7 +2,7 @@
 @model Movie
 
 @{
-    ViewData["Title"] = "Movie details";
+    ViewData["Title"] = "Детали";
 }
 
 <div class="row">
@@ -25,22 +25,22 @@
                     <div class="card-body">
                         <p class="card-text">@Model?.Description</p>
                         <p class="card-text">
-                            <b>Cinema: </b>
+                            <b>Кинотеатр: </b>
                             <a asp-controller="Cinemas" asp-action="Details" asp-route-id="@Model?.Cinema?.Id">
                                 @Model?.Cinema?.Name
                             </a>
                         </p>
                         <p class="card-text">
-                            <b>Director: </b>
+                            <b>Режиссер: </b>
                             <a asp-controller="Directors" asp-action="Details" asp-route-id="@Model?.Director?.Id">
                                 @Model?.Director?.FullName
                             </a>
                         </p>
-                        <p class="card-text"><b>Category: </b>@Model?.MovieCategory.ToString()</p>
-                        <p class="card-text"><b>Start Date: </b>@Model?.StratDate.ToString("dd MMM")</p>
-                        <p class="card-text"><b>End Date: </b>@Model?.EndDate.ToString("dd MMM")</p>
+                        <p class="card-text"><b>Категория: </b>@Model?.MovieCategory.ToString()</p>
+                        <p class="card-text"><b>Дата начала: </b>@Model?.StratDate.ToString("dd MMM")</p>
+                        <p class="card-text"><b>Дата окончания: </b>@Model?.EndDate.ToString("dd MMM")</p>
                         <p class="card-text">
-                            <b>Actors </b>
+                            <b>Актеры: </b>
                             <hr />
                             <div class="row">
                                 @foreach (var actor in Model!.ActorsMovies!)
@@ -62,10 +62,10 @@
                         <p class="card-text">
                             <a class="btn btn-success" asp-controller="Orders" asp-action="AddToCart" asp-route-id="@Model.Id">
                                 <i class="bi bi-cart-plus"></i>
-                                Add to cart (Price @Model.Price$)
+                                Добавить в корзину (Цена @Model.Price₽)
                             </a>
                             <a class="btn btn-outline-primary float-end" asp-action="Index">
-                                Back to list
+                                Назад к списку фильмов
                             </a>
                         </p>
                     </div>
