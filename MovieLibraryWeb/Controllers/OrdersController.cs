@@ -132,7 +132,7 @@ namespace MovieLibraryWeb.Controllers
                 var reference = cart.Id.ToString();
 
 
-                return Ok();
+                return Ok(reference);
             }
             catch (Exception e)
             {
@@ -150,12 +150,6 @@ namespace MovieLibraryWeb.Controllers
         {
             try
             {
-                //var response = await _paypalClient.CaptureOrder(orderId);
-
-                // var reference = response?.purchase_units[0]?.reference_id;
-
-                // Put your logic to save the transaction here
-                // You can use the "reference" variable as a transaction key
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
                 var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
                 if (userId == null || userEmail == null)
@@ -167,9 +161,10 @@ namespace MovieLibraryWeb.Controllers
                 {
                     cart = new Cart();
                 }
-                await _orderService.OrderAsync(cart, orderId);
+                orderId = cart.Id.ToString();
+                var order = await _orderService.OrderAsync(cart, orderId);
 
-                return Ok();
+                return RedirectToAction("Success", "Orders");
             }
             catch (Exception e)
             {

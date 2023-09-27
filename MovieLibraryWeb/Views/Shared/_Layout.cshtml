@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using MovieLibrary.Models.Static;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,25 +28,25 @@
                     </div>
                     <div class="offcanvas-body ">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            @if (User!.Identity!.IsAuthenticated)
+                            @if (User.IsInRole(UserRolesValues.Admin))
                             {
                                 <li class="nav-item dropdown me-2">
                                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Management
+                                        Управление
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="Cinemas" asp-action="Index">Cinemas</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Actors" asp-action="Index">Actors</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Directors" asp-action="Index">Directors</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Orders" asp-action="ListAll">Orders</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Cinemas" asp-action="Index">Кинотеатры</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Actors" asp-action="Index">Актеры</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Directors" asp-action="Index">Режиссеры</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Orders" asp-action="ListAll">Заказы</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Users</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Пользователи</a></li>
                                     </ul>
                                 </li>
                             }
                         </ul>
                         <form class="d-flex mt-3 mt-lg-0 me-3" role="search" asp-controller="Movies" asp-action="Filter">
-                            <input name="searchString" type="search" class="form-control me-2" placeholder="Search..." />
+                            <input name="searchString" type="search" class="form-control me-2" placeholder="Поиск..." />
                             <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
                         </form>
                         <partial name="_Identity" />

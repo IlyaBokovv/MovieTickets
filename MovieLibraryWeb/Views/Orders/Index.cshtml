@@ -56,7 +56,7 @@
             <tfoot>
                 <tr>
                     <td colspan="2"></td>
-                    <td><b>Total:</b></td>
+                    <td><b>Всего:</b></td>
                     <td>@Model.Item1.Total.ToString("c")</td>
                     <td></td>
                 </tr>
@@ -67,46 +67,16 @@
                 <a class="btn btn-outline-success" asp-controller="Movies" asp-action="Index">
                     Добавить еще
                 </a>
+                <form method="post" action="@Url.Action("Capture", "Orders")">
+
+                    <!-- Добавьте необходимые поля формы, например, orderId, если они не являются частью модели -->
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn btn-warning">Оплатить заказ</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="btn col-sm-10 offset-sm-1 col-md-8 offset-md-2" id="paypal-button-container"></div>
-    </div>
+
 
 </div>
-@section Scripts {
-    <script src=@($"https://www.paypal.com/sdk/js?client-id={Model.Item2}")></script>
-
-    <script>
-        paypal.Buttons({
-            style: {
-                layout: 'vertical',
-                tagline: 'false'
-            },
-            createOrder: (data, actions) => {
-                return fetch("@Url.Action("Order")", {
-                    method: "post",
-                }).then((response) => {
-                    if (!response.ok) {
-                        return response.json().then(error => { throw error; });
-                    }
-
-                    return response.json();
-                }).then((order) => order.id)
-                    .catch(error => alert(error.message));
-            },
-            onApprove: (data, actions) => {
-                return fetch(`@Url.Action("Capture")?orderId=${data.orderID}`, {
-                    method: "post",
-                }).then((response) => {
-                    if (!response.ok) {
-                        return response.json().then(error => { throw error; });
-                    }
-
-                    window.location.href = "@Url.Action("Success")";
-                }).catch(error => alert(error.message));
-            }
-        }).render('#paypal-button-container');
-    </script>
-}

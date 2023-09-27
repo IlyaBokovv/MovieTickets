@@ -33,19 +33,19 @@ namespace MovieLibraryWeb.Controllers
             var user = await _userManager.FindByEmailAsync(loginVM.Email);
             if (user == null)
             {
-                TempData["Error"] = "Wrong credentials. Please try again.";
+                TempData["Error"] = "Логин или пароль введен неверно";
                 return View(loginVM);
             }
             var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
             if (passwordCheck == false)
             {
-                TempData["Error"] = "Wrong credentials. Please try again.";
+                TempData["Error"] = "Логин или пароль введен неверно";
                 return View(loginVM);
             }
             var loginRes = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
             if (!loginRes.Succeeded)
             {
-                TempData["Error"] = "Wrong credentials. Please try again.";
+                TempData["Error"] = "Логин или пароль введен неверно";
                 return View(loginVM);
             }
             return RedirectToAction(actionName: "Index", controllerName: "Movies");
@@ -70,7 +70,7 @@ namespace MovieLibraryWeb.Controllers
             var u = await _userManager.FindByEmailAsync(registerVM.Email);
             if (u != null)
             {
-                TempData["Error"] = "This email is already taken";
+                TempData["Error"] = "Пользователь с введенным email адресом уже зарегестрирован";
                 return View(registerVM);
             }
             var user = new AppUser()

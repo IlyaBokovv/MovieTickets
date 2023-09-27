@@ -1,7 +1,7 @@
 ﻿@using MovieLibrary.Models.ViewModels;
 @model DetailedUserVM
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Детали";
 }
 
 <div class="row">
@@ -12,20 +12,18 @@
         <div class="text-center mb-5">
             <h1>@Model.FullName</h1>
             <h5>@@@Model.UserName</h5>
-            <p>Money Spent: @Model.MoneyPaied.ToString("c")</p>
+            <p>Всего потрачено денег: @Model.MoneyPaied.ToString("c")</p>
         </div>
-        <h3>Contact Info</h3>
+        <h3>Контактная информация</h3>
         <ul>
             <li><b>Email</b>: @Model.Email</li>
-            <li><b>Phone Number</b>: @Model.PhoneNumber</li>
+            <li><b>Номер телефона</b>: @Model.PhoneNumber</li>
         </ul>
-        <h4>User Address</h4>
+        <h4>Адрес пользователя</h4>
         <ul>
-            <li>Country: @Model.Country</li>
-            <li>State: @Model.State</li>
-            <li>City: @Model.City</li>
-            <li>Street: @Model.Street</li>
-            <li>Zip Code: @Model.ZipCode</li>
+            <li>Страна: @Model.Country</li>
+            <li>Город: @Model.City</li>
+            <li>Улица: @Model.Street</li>
         </ul>
         @if (Model.Orders.Count > 0)
         {
@@ -33,9 +31,9 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Order Id</th>
-                        <th>Items</th>
-                        <th>Total Price</th>
+                        <th>Id заказа</th>
+                        <th>Элементы</th>
+                        <th>Цена</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +65,7 @@
                 </tbody>
             </table>
         }
-        <h4>User Roles</h4>
+        <h4>Роли</h4>
         <ul>
             @foreach (var role in Model.Roles)
             {
@@ -75,7 +73,7 @@
             }
         </ul>
         <div class="my-2">
-            <a class="btn btn-outline-secondary float-end" href='javascript:history.go(-1)'>Go Back</a>
+            <a class="btn btn-outline-secondary float-end" href='javascript:history.go(-1)'>Вернуться назад</a>
         </div>
     </div>
 </div>
