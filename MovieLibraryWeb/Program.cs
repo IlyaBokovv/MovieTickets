@@ -7,6 +7,7 @@ using MovieLibrary.DataAccess;
 using MovieLibrary.Models.Models;
 using MovieLibrary.Services.Interfaces;
 using MovieLibrary.Services.Services;
+using MovieLibraryWeb.Configuration;
 using Services.Interfaces;
 using System;
 
@@ -16,27 +17,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Identity Service
-builder.Services
-    .AddIdentity<AppUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddRoleValidator<RoleValidator<IdentityRole>>();
+builder.Services.AddIndentity();
 
-// Authentication and Authorization
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-});
-builder.Services.AddAuthorization();
+builder.Services.AddAuthethicationAndAuthorization();
 
-// my services
-builder.Services.AddScoped<IActorService, ActorService>();
-builder.Services.AddScoped<IDirectorService, DirectorService>();
-builder.Services.AddScoped<ICinemaService, CinemaService>();
-builder.Services.AddScoped<IMovieService, MovieService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
+builder.Services.AddMyServices();
 
 var app = builder.Build();
 
