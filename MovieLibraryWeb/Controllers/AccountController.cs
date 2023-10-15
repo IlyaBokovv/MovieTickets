@@ -70,7 +70,7 @@ namespace MovieLibraryWeb.Controllers
             var u = await _userManager.FindByEmailAsync(registerVM.Email);
             if (u != null)
             {
-                TempData["Error"] = "Пользователь с введенным email адресом уже зарегестрирован";
+                TempData["Error"] = "Пользователь с введенным email адресом уже зарегистрирован";
                 return View(registerVM);
             }
             var user = new AppUser()
