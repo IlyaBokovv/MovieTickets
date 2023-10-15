@@ -28,11 +28,13 @@ namespace MovieLibrary.Models.ViewModels
         public string PhoneNumber { get; set; } = "";
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
-        [MaxLength(32), MinLength(2)]
+        [MaxLength(32, ErrorMessage = "Это поле должно быть короче 32 символов"),
+            MinLength(2, ErrorMessage = "Это поле должно быть больше 2 символов")]
         public string Country { get; set; } = "";
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
-        [MaxLength(32), MinLength(2)]
+        [MaxLength(32, ErrorMessage = "Это поле должно быть короче 32 символов"),
+            MinLength(2, ErrorMessage ="Это поле должно быть больше 2 символов")]
         public string City { get; set; } = "";
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
