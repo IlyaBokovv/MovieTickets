@@ -57,6 +57,12 @@ namespace MovieLibraryWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(MovieVM movieVm)
         {
+            var actors = await _actorService.GetAllAsync();
+            var producers = await _producerService.GetAllAsync();
+            var cinemas = await _cinemaService.GetAllAsync();
+            ViewBag.Actors = new SelectList(actors, "Id", "FullName");
+            ViewBag.Producers = new SelectList(producers, "Id", "FullName");
+            ViewBag.Cinemas = new SelectList(cinemas, "Id", "Name");
             if (!ModelState.IsValid)
             {
                 return View(movieVm);

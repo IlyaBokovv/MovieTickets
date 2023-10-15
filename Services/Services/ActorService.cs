@@ -60,9 +60,12 @@ namespace MovieLibrary.Services.Services
         }
         public async Task<Actor> AddActorWithImageUplodaing(Actor actor)
         {
-            var imagePath = await _imageUploadService.UploadAsync(actor.Image, nameof(Actor) + actor.FullName!, ImageType.Actor);
+            if (actor.Image.ImageFile is not null)
+            {
+                var imagePath = await _imageUploadService.UploadAsync(actor.Image, nameof(Actor) + actor.FullName!, ImageType.Actor);
+                actor.Image.ImagePath = imagePath;
+            }
 
-            actor.Image.ImagePath = imagePath;
             await _db.Actors.AddAsync(actor);
             await _db.SaveChangesAsync();
             return actor;

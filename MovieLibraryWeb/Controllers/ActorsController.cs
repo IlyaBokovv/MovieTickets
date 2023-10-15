@@ -42,7 +42,7 @@ namespace MovieLibraryWeb.Controllers
             };
             if (!ModelState.IsValid)
             {
-                return View(actor);
+                return View(actorVM);
             }
             await _actorService.AddActorWithImageUplodaing(actor);
             return RedirectToAction(nameof(Index));

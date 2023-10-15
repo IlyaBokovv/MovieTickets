@@ -4,6 +4,7 @@ using MovieLibrary.Services.Interfaces;
 using MovieLibrary.DataAccess.Repository;
 using MovieLibrary.DataAccess;
 using MovieLibrary.Models.Static;
+using MovieLibrary.Models.ViewModels;
 
 namespace MovieLibrary.Services.Services
 {
@@ -57,9 +58,11 @@ namespace MovieLibrary.Services.Services
         }
         public async Task<Director> AddDirectorWithImageUplodaing(Director director)
         {
-            var imagePath = await _imageUploadService.UploadAsync(director.Image, nameof(Director) + director.FullName!, ImageType.Directors);
-
-            director.Image.ImagePath = imagePath;
+            if (director.Image.ImageFile is not null)
+            {
+                var imagePath = await _imageUploadService.UploadAsync(director.Image, nameof(Director) + director.FullName!, ImageType.Directors);
+                director.Image.ImagePath = imagePath;
+            }
             await _db.Directors.AddAsync(director);
             await _db.SaveChangesAsync();
             return director;

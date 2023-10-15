@@ -48,7 +48,7 @@ namespace mvc.Controllers
             };
             if (!ModelState.IsValid)
             {
-                return View(cinema);
+                return View(cinemaVM);
             }
             await _cinemaService.AddWithImageUplodaing(cinema);
             return RedirectToAction(nameof(Index));

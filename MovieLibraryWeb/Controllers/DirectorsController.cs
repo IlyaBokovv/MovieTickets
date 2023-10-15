@@ -47,7 +47,7 @@ namespace MovieLibraryWeb.Controllers
             };
             if (!ModelState.IsValid)
             {
-                return View(director);
+                return View(directorVM);
             }
             await _directorService.AddDirectorWithImageUplodaing(director);
             return RedirectToAction(nameof(Index));

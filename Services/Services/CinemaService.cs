@@ -56,9 +56,11 @@ namespace MovieLibrary.Services.Services
         }
         public async Task<Cinema> AddWithImageUplodaing(Cinema cinema)
         {
-            var imagePath = await _imageUploadService.UploadAsync(cinema.Image, nameof(Cinema) + cinema.Name!, ImageType.Cinemas);
-
-            cinema.Image.ImagePath = imagePath;
+            if (cinema.Image.ImageFile is not null)
+            {
+                var imagePath = await _imageUploadService.UploadAsync(cinema.Image, nameof(Cinema) + cinema.Name!, ImageType.Cinemas);
+                cinema.Image.ImagePath = imagePath;
+            }
             await _db.Cinemas.AddAsync(cinema);
             await _db.SaveChangesAsync();
             return cinema;
