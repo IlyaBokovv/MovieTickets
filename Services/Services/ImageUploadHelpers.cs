@@ -1,4 +1,4 @@
-﻿internal static class CinemaServiceHelpers
+﻿internal static class ImageUploadHelpers
 {
     private static Dictionary<char, string> transliterationTable = new Dictionary<char, string>
             {
@@ -18,8 +18,8 @@
 
         foreach (char c in inputChars)
         {
-            if (CinemaServiceHelpers.transliterationTable.ContainsKey(c))
-                outputChars.Add(CinemaServiceHelpers.transliterationTable[c]);
+            if (ImageUploadHelpers.transliterationTable.ContainsKey(c))
+                outputChars.Add(ImageUploadHelpers.transliterationTable[c]);
             else
                 outputChars.Add(c.ToString());
         }

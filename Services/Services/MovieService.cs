@@ -2,6 +2,7 @@
 using MovieLibrary.DataAccess;
 using MovieLibrary.DataAccess.Repository;
 using MovieLibrary.Models.Models;
+using MovieLibrary.Models.Static;
 using MovieLibrary.Models.ViewModels;
 using MovieLibrary.Services.Interfaces;
 using System;
@@ -49,7 +50,7 @@ namespace MovieLibrary.Services.Services
             {
                 if (movie.Image.ImageFile != null)
                 {
-                    var imagePath = await _imageUploadService.UploadAsync(movie.Image, nameof(Movie) + movie.Name);
+                    var imagePath = await _imageUploadService.UploadAsync(movie.Image, nameof(Movie) + movie.Name, ImageType.Movies);
                     movie.Image.ImagePath = imagePath;
                 }
                 await _db.Movies.AddAsync(movie);
@@ -104,7 +105,7 @@ namespace MovieLibrary.Services.Services
             if (movieVM.Image.ImageFile != null)
             {
                 var newImage = new Image() { ImageFile = movieVM.Image.ImageFile };
-                newImage.ImagePath = await _imageUploadService.UploadAsync(newImage, nameof(Movie) + oldMovie.Name);
+                newImage.ImagePath = await _imageUploadService.UploadAsync(newImage, nameof(Movie) + oldMovie.Name, ImageType.Movies);
                 await _db.Images.AddAsync(newImage);
                 await _db.SaveChangesAsync();
 

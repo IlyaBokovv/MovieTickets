@@ -1,7 +1,7 @@
 ﻿using MovieLibrary.Models.Models;
 using MovieLibrary.Services.Interfaces;
 using Microsoft.Extensions.Hosting;
-
+using MovieLibrary.Models.Static;
 
 namespace MovieLibrary.Services.Services
 {
@@ -21,19 +21,19 @@ namespace MovieLibrary.Services.Services
                 File.Delete(destinationOnServer);
             }
         }
-        public async Task<string> UploadAsync(Image image, string imageId)
+        public async Task<string> UploadAsync(Image image, string imageId, string destination)
         {
             string wwwRootPath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot");
             string extension = Path.GetExtension(image.ImageFile!.FileName);
 
-            string fileName = imageId + '-' + DateTime.Now.ToString("yymmssfff") + extension;
+            string fileName = ImageUploadHelpers.ConvertToTranslit(imageId + '-' + DateTime.Now.ToString("yymmssfff") + extension);
 
-            string destinationOnServer = Path.Combine(wwwRootPath + "/images/", fileName);
+            string destinationOnServer = Path.Combine(wwwRootPath + $"/images/{destination}/", fileName);
             using (var fileStream = new FileStream(destinationOnServer, FileMode.Create))
             {
                 await image.ImageFile.CopyToAsync(fileStream);
             }
-            return "images/" + fileName;
+            return $"images/{destination}/" + fileName;
         }
     }
 }

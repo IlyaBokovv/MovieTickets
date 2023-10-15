@@ -3,6 +3,7 @@ using MovieLibrary.DataAccess;
 using MovieLibrary.DataAccess.Repository;
 using MovieLibrary.DataAccess.Repository.IRepository;
 using MovieLibrary.Models.Models;
+using MovieLibrary.Models.Static;
 using MovieLibrary.Services.Interfaces;
 using Services.Interfaces;
 using System;
@@ -42,7 +43,8 @@ namespace MovieLibrary.Services.Services
             }
             _imageUploadService.Delete(oldImage.ImagePath);
 
-            var imagePath = await _imageUploadService.UploadAsync(actor.Image, nameof(Actor) + actor.FullName!);
+            var imagePath = await _imageUploadService.UploadAsync(actor.Image, nameof(Actor) + actor.FullName!,
+                ImageType.Actor);
             actor.Image.ImagePath = imagePath;
 
 
@@ -58,7 +60,7 @@ namespace MovieLibrary.Services.Services
         }
         public async Task<Actor> AddActorWithImageUplodaing(Actor actor)
         {
-            var imagePath = await _imageUploadService.UploadAsync(actor.Image, nameof(Actor) + actor.FullName!);
+            var imagePath = await _imageUploadService.UploadAsync(actor.Image, nameof(Actor) + actor.FullName!, ImageType.Actor);
 
             actor.Image.ImagePath = imagePath;
             await _db.Actors.AddAsync(actor);

@@ -2,6 +2,7 @@
 using MovieLibrary.DataAccess;
 using MovieLibrary.DataAccess.Repository;
 using MovieLibrary.Models.Models;
+using MovieLibrary.Models.Static;
 using MovieLibrary.Services.Interfaces;
 
 namespace MovieLibrary.Services.Services
@@ -35,7 +36,10 @@ namespace MovieLibrary.Services.Services
             }
             _imageUploadService.Delete(oldImage.ImagePath);
 
-            var imagePath = await _imageUploadService.UploadAsync(cinema.Image, nameof(Cinema) + CinemaServiceHelpers.ConvertToTranslit(cinema.Name!));
+            var imagePath = await _imageUploadService.UploadAsync(
+                cinema.Image,
+                nameof(Cinema) + (cinema.Name!)
+                ,ImageType.Directors);
             cinema.Image.ImagePath = imagePath;
 
 
@@ -52,7 +56,7 @@ namespace MovieLibrary.Services.Services
         }
         public async Task<Cinema> AddWithImageUplodaing(Cinema cinema)
         {
-            var imagePath = await _imageUploadService.UploadAsync(cinema.Image, nameof(Cinema) + CinemaServiceHelpers.ConvertToTranslit(cinema.Name!));
+            var imagePath = await _imageUploadService.UploadAsync(cinema.Image, nameof(Cinema) + cinema.Name!, ImageType.Cinemas);
 
             cinema.Image.ImagePath = imagePath;
             await _db.Cinemas.AddAsync(cinema);
