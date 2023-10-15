@@ -6,7 +6,7 @@ namespace MovieLibrary.Models.ViewModels
 {
     public class DirectorVM
     {
-        [Required]
+        [Required(ErrorMessage = "Это поле обязательно для заполнения")]
         [DisplayName("Имя")]
         public string FullName { get; set; } = "";
 

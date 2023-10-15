@@ -6,11 +6,11 @@ namespace MovieLibrary.Models.ViewModels
 {
     public class CinemaVM
     {
-        [Required]
+        [Required(ErrorMessage = "Это поле обязательно для заполнения")]
         [DisplayName("Название")]
         public string Name { get; set; } = "";
 
-        [Required]
+        [Required(ErrorMessage = "Это поле обязательно для заполнения")]
         [DisplayName("Описание")]
         public string? Description { get; set; } = "";
         public Image Image { get; set; } = new Image();
