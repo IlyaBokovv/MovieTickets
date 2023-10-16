@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieLibrary.DataAccess;
 using MovieLibraryWeb.Configuration;
-using MovieLibraryWeb.Middlewares;
 using mvc.Data.DataSeed;
 
 var builder = WebApplication.CreateBuilder(args);
