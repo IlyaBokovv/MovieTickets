@@ -14,7 +14,7 @@ namespace MovieLibrary.Services.Exceptions
         {
             Id = id;
         }
-        public int StatusCode => (int)HttpStatusCode.NotFound;
+        public int StatusCode => (int)HttpStatusCode.BadRequest;
         public string Id { get; init; }
     }
 

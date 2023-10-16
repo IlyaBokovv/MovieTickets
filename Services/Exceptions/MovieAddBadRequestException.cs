@@ -9,7 +9,7 @@ namespace MovieLibrary.Services.Exceptions
     public sealed class MovieAddBadRequestException : BadRequestExeption
     {
         public MovieAddBadRequestException(string id)
-            : base("Пользователь с данным id не найден", id)
+            : base("Фильм с данным id не найден", id)
         {
         }
     }

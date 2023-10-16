@@ -9,7 +9,7 @@ namespace MovieLibrary.Services.Exceptions
     public sealed class OrderByIdNotFoundException : NotFoundException
     {
         public OrderByIdNotFoundException(int id)
-            : base("Актер с данным id не найден", id)
+            : base("Заказ с данным id не найден", id)
         {
         }
     }

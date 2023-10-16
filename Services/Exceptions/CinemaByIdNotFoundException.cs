@@ -9,7 +9,7 @@ namespace MovieLibrary.Services.Exceptions
     public sealed class CinemaByIdNotFoundException : NotFoundException
     {
         public CinemaByIdNotFoundException(int id)
-            : base("Пользователь с данным id не найден", id)
+            : base("Студия с данным id не найден", id)
         {
         }
     }

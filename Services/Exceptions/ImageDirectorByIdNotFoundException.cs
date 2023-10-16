@@ -9,7 +9,7 @@ namespace MovieLibrary.Services.Exceptions
     public sealed class ImageDirectorByIdNotFoundException : NotFoundException
     {
         public ImageDirectorByIdNotFoundException(int id)
-            : base("Пользователь с данным id не найден", id)
+            : base("Директория изображения с данным id не найдена", id)
         {
         }
     }
