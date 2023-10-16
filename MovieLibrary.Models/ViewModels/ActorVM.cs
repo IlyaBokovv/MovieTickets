@@ -9,15 +9,15 @@ using MovieLibrary.Models.Models;
 
 namespace MovieLibrary.Models.ViewModels
 {
-    public class ActorVM
+    public record ActorVM
     {
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
         [DisplayName("Имя")]
-        public string FullName { get; set; } = "";
+        public string FullName { get; init; } = "";
 
         [DisplayName("Биография")]
-        public string? Bio { get; set; } = "";
-        public Image Image { get; set; } = new Image();
+        public string? Bio { get; init; } = "";
+        public Image Image { get; init; } = new Image();
     }
 
 }

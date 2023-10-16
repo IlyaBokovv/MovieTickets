@@ -2,16 +2,16 @@
 
 namespace MovieLibrary.Models.ViewModels
 {
-    public class DetailedUserVM : UserVM
+    public record DetailedUserVM : UserVM
     {
-        public List<Order> Orders { get; set; } = new List<Order>();
-        public Cart? Cart { get; set; }
-        public decimal MoneyPaied { get; set; }
-        public string Country { get; set; } = "";
-        public string State { get; set; } = "";
-        public string City { get; set; } = "";
-        public string Street { get; set; } = "";
-        public string ZipCode { get; set; } = "";
-        public IEnumerable<string> Roles { get; set; } = new List<string>();
+        public List<Order> Orders { get; init; } = new List<Order>();
+        public Cart? Cart { get; init; }
+        public decimal MoneyPaied { get; init; }
+        public string Country { get; init; } = "";
+        public string State { get; init; } = "";
+        public string City { get; init; } = "";
+        public string Street { get; init; } = "";
+        public string ZipCode { get; init; } = "";
+        public IEnumerable<string> Roles { get; init; } = new List<string>();
     }
 }

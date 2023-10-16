@@ -8,9 +8,9 @@ using System.Xml.Linq;
 
 namespace MovieLibrary.Models.ViewModels
 {
-    public class CartVM
+    public record CartVM
     {
-        public Cart Cart { get; set; }
-        public decimal Total { get; set; }
+        public Cart Cart { get; init; }
+        public decimal Total { get; init; }
     }
 }

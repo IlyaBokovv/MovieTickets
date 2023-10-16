@@ -4,15 +4,15 @@ using System.ComponentModel;
 
 namespace MovieLibrary.Models.ViewModels
 {
-    public class CinemaVM
+    public record CinemaVM
     {
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
         [DisplayName("Название")]
-        public string Name { get; set; } = "";
+        public string Name { get; init; } = "";
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
         [DisplayName("Описание")]
-        public string? Description { get; set; } = "";
-        public Image Image { get; set; } = new Image();
+        public string? Description { get; init; } = "";
+        public Image Image { get; init; } = new Image();
     }
 }
