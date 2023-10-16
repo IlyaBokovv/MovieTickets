@@ -39,7 +39,7 @@ namespace MovieLibrary.Models.ViewModels
         public int DirectorId { get; init; }
 
         [Required(ErrorMessage = "Кинотеарт обязателен для заполнения")]
-        [Display(Name = "Кинотеатр")]
+        [Display(Name = "Студия")]
         public int CinemaId { get; init; }
 
         [Required(ErrorMessage = "В фильме должен быть как минимум 1 актер")]
