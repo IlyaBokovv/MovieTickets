@@ -26,11 +26,11 @@ namespace mvc.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var cinema = await _cinemaService.GetByIdAsync(id, trackChanges: false, d => d.Image);
-            if (cinema != null)
+            if (cinema is null)
             {
-                return View(cinema);
+                throw new CinemaByIdNotFoundException(id);
             }
-            throw new CinemaByIdNotFoundException();
+            return View(cinema);
         }
 
         public IActionResult Create()
@@ -58,9 +58,9 @@ namespace mvc.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var cinema = await _cinemaService.GetByIdAsync(id, trackChanges: false, d => d.Image);
-            if (cinema == null)
+            if (cinema is null)
             {
-                throw new CinemaByIdNotFoundException();
+                throw new CinemaByIdNotFoundException(id);
             }
             return View(cinema);
         }
@@ -79,9 +79,9 @@ namespace mvc.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var cinema = await _cinemaService.GetByIdAsync(id, trackChanges: false, d => d.Image);
-            if (cinema == null)
+            if (cinema is null)
             {
-                throw new CinemaByIdNotFoundException();
+                throw new CinemaByIdNotFoundException(id);
             }
             return View(cinema);
         }
@@ -89,9 +89,9 @@ namespace mvc.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var cinema = await _cinemaService.GetByIdAsync(id, trackChanges: false, d => d.Image);
-            if (cinema == null)
+            if (cinema is null)
             {
-                throw new CinemaByIdNotFoundException();
+                throw new CinemaByIdNotFoundException(id);
             }
             await _cinemaService.DeleteAsyncWithImage(cinema);
             return RedirectToAction(nameof(Index));

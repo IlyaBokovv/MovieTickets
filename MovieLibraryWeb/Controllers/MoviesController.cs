@@ -37,13 +37,12 @@ namespace MovieLibraryWeb.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
-            var movie = await _movieService
-                .GetByIdWithInclusionAsync(id);
-            if (movie != null)
+            var movie = await _movieService.GetByIdWithInclusionAsync(id);
+            if (movie is null)
             {
-                return View(movie);
+                throw new MovieByIdNotFoundException(id);
             }
-            throw new MovieByIdNotFoundException();
+            return View(movie);
         }
 
         public async Task<IActionResult> Create()
@@ -70,7 +69,6 @@ namespace MovieLibraryWeb.Controllers
             {
                 return View(movieVm);
             }
-
             var movie = await _movieService.AddMovieVMAsync(movieVm);
 
             return RedirectToAction(nameof(Index));
@@ -80,11 +78,10 @@ namespace MovieLibraryWeb.Controllers
         {
             var movie = await _movieService
                 .GetByIdWithInclusionAsync(id);
-            if (movie == null)
+            if (movie is null)
             {
-                throw new MovieByIdNotFoundException();
+                throw new MovieByIdNotFoundException(id);
             }
-
             var actors = await _actorService.GetAllAsync();
             var producers = await _producerService.GetAllAsync();
             var cinemas = await _cinemaService.GetAllAsync();
@@ -143,23 +140,16 @@ namespace MovieLibraryWeb.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var movie = await _movieService.GetByIdAsync(id, trackChanges: false, m => m.Image);
-            if (movie == null)
+            if (movie is null)
             {
-                throw new MovieByIdNotFoundException();
+                throw new MovieByIdNotFoundException(id);
             }
             return View(movie);
         }
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                await _movieService.RemoveWithImageAsync(id);
-            }
-            catch (InvalidOperationException ex)
-            {
-                BadRequest(ex.Message);
-            }
+            await _movieService.RemoveWithImageAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

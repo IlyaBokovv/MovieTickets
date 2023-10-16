@@ -52,9 +52,9 @@ namespace MovieLibraryWeb.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var actor = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
-            if (actor == null)
+            if (actor is null)
             {
-                throw new ActorByIdNotFoundException();
+                throw new ActorByIdNotFoundException(id);
             }
             return View(actor);
         }
@@ -62,9 +62,9 @@ namespace MovieLibraryWeb.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var actor = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
-            if (actor == null)
+            if (actor is null)
             {
-                throw new ActorByIdNotFoundException();
+                throw new ActorByIdNotFoundException(id);
             }
             return View(actor);
         }
@@ -75,16 +75,15 @@ namespace MovieLibraryWeb.Controllers
             {
                 return View(actor);
             }
-
             await _actorService.UpdateActorWithImageAsync(actor);
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Delete(int id)
         {
             var actor = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
-            if (actor == null)
+            if (actor is null)
             {
-                throw new ActorByIdNotFoundException();
+                throw new ActorByIdNotFoundException(id);
             }
             return View(actor);
         }
@@ -92,9 +91,9 @@ namespace MovieLibraryWeb.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var actor = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
-            if (actor == null)
+            if (actor is null)
             {
-                throw new ActorByIdNotFoundException();
+                throw new ActorByIdNotFoundException(id);
             }
             await _actorService.DeleteAsyncWithImage(actor);
             return RedirectToAction(nameof(Index));

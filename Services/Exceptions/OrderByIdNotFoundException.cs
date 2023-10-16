@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary.Services.Exceptions
 {
-    public sealed class ActorByIdNotFoundException : NotFoundException
+    public sealed class OrderByIdNotFoundException : NotFoundException
     {
-        public ActorByIdNotFoundException(int id)
+        public OrderByIdNotFoundException(int id)
             : base("Актер с данным id не найден", id)
         {
         }

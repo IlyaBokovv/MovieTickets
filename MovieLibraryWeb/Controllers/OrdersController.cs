@@ -27,14 +27,13 @@ namespace MovieLibraryWeb.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
-            if (userId == null || userEmail == null)
+            if (userId is null || userEmail is null)
             {
-                throw new UserByIdOrEmailNotFoundException();
+                throw new UserByIdOrEmailBadRequestException(userId);
             }
-            var orders = await _orderService.
-                GetUserOrdersAsync(userId, userEmail);
+            var orders = await _orderService.GetUserOrdersAsync(userId, userEmail);
 
-            return View(orders == null ? new List<Order>() : orders);
+            return View(orders is null ? new List<Order>() : orders);
         }
         [Authorize(Roles = UserRolesValues.Admin)]
         public async Task<IActionResult> ListAll()
@@ -42,19 +41,19 @@ namespace MovieLibraryWeb.Controllers
             var orders = await _orderService.
                 GetOrdersWithUsersAsync();
 
-            return View(orders == null ? new List<Order>() : orders);
+            return View(orders is null ? new List<Order>() : orders);
         }
 
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
-            if (userId == null || userEmail == null)
+            if (userId is null || userEmail is null)
             {
-                throw new UserByIdOrEmailNotFoundException();
+                throw new UserByIdOrEmailBadRequestException(userId);
             }
             var cart = await _cartService.GetUserCartAsync(userId, userEmail);
-            if (cart == null)
+            if (cart is null)
             {
                 cart = new Cart();
             }
@@ -69,14 +68,14 @@ namespace MovieLibraryWeb.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
-            if (userId == null || userEmail == null)
+            if (userId is null || userEmail is null)
             {
-                throw new UserByIdOrEmailNotFoundException();
+                throw new UserByIdOrEmailBadRequestException(userId);
             }
             var cart = await _cartService.AddMovieToCartAsync(id, userId, userEmail);
-            if (cart == null)
+            if (cart is null)
             {
-                throw new CartByIdNotFoundException();
+                throw new UserByIdOrEmailBadRequestException(userId);
             }
             return RedirectToAction(nameof(Index));
         }
@@ -85,9 +84,9 @@ namespace MovieLibraryWeb.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
 
-            if (userId == null || userEmail == null)
+            if (userId is null || userEmail is null)
             {
-                throw new UserByIdOrEmailNotFoundException();
+                throw new UserByIdOrEmailBadRequestException(userId);
             }
             var cart = await _cartService.RemoveMovieFromCartAsync(id, userId, userEmail);
             return RedirectToAction(nameof(Index));
@@ -110,12 +109,12 @@ namespace MovieLibraryWeb.Controllers
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
                 var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
-                if (userId == null || userEmail == null)
+                if (userId is null || userEmail is null)
                 {
-                    throw new UserByIdOrEmailNotFoundException();
+                    throw new UserByIdOrEmailBadRequestException(userId);
                 }
                 var cart = await _cartService.GetUserCartAsync(userId, userEmail);
-                if (cart == null)
+                if (cart is null)
                 {
                     cart = new Cart();
                 }

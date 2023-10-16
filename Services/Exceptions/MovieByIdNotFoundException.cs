@@ -8,8 +8,8 @@ namespace MovieLibrary.Services.Exceptions
 {
     public sealed class MovieByIdNotFoundException : NotFoundException
     {
-        public MovieByIdNotFoundException()
-            : base("Пользователь с данным id не найден")
+        public MovieByIdNotFoundException(int id)
+            : base("Пользователь с данным id не найден", id)
         {
         }
     }
