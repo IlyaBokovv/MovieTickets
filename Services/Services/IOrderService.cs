@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieLibrary.DataAccess;
 using MovieLibrary.Models.Models;
-using MovieLibrary.Services.Exceptions;
 using MovieLibrary.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -78,13 +77,14 @@ namespace MovieLibrary.Services.Services
             var order = await _dbContext.Orders.FindAsync(id);
             if (order is null)
             {
-                throw new OrderByIdNotFoundException(id);
+                throw new InvalidOperationException("order not found");
             }
             if (order.OrderStatus == Models.Enums.OrderStatus.Done)
             {
-                throw new OrderByIdNotFoundException(id);
+                throw new InvalidOperationException("order is already done");
             }
             order.OrderStatus = Models.Enums.OrderStatus.Done;
+
             await _dbContext.SaveChangesAsync();
         }
     }

@@ -24,7 +24,6 @@ namespace MovieLibraryWeb.Middlewares
             }
             catch (Exception ex)
             {
-                context.Response.Clear();
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
         }

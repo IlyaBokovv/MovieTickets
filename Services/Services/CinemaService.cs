@@ -23,20 +23,35 @@ namespace MovieLibrary.Services.Services
                 .Where(i => i.Id == cinema.Id)
                 .Select(a => a.Image)
                 .FirstOrDefaultAsync();
-            if (cinema.Image!.ImageFile is not null)
+            if (oldImage == null)
             {
-                _imageUploadService.Delete(oldImage.ImagePath);
-                cinema.Image.ImagePath = await _imageUploadService.UploadAsync(cinema.Image, nameof(Cinema) + cinema.Name!,
-                    ImageType.Cinemas);
-                _db.Cinemas.Attach(cinema);
-                _db.Images.Remove(oldImage);
-                await _db.Images.AddAsync(cinema.Image);
-                await UpdateAsync(cinema);
-                await _db.SaveChangesAsync();
-                return cinema;
+                throw new InvalidOperationException("invalid cinema id");
             }
-            cinema.ImageId = oldImage.Id;
-            await UpdateAsync(cinema);
+            if (cinema.Image.ImageFile == null)
+            {
+                cinema.ImageId = oldImage.Id;
+                await UpdateAsync(cinema);
+                return cinema;
+
+            }
+            _imageUploadService.Delete(oldImage.ImagePath);
+
+            var imagePath = await _imageUploadService.UploadAsync(
+                cinema.Image,
+                nameof(Cinema) + (cinema.Name!)
+                ,ImageType.Directors);
+            cinema.Image.ImagePath = imagePath;
+
+
+            await _db.Images.AddAsync(cinema.Image);
+            await _db.SaveChangesAsync();
+
+            cinema.ImageId = cinema.Image.Id;
+            _db.Cinemas.Entry(cinema).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
+
+            _db.Images.Remove(oldImage);
+            await _db.SaveChangesAsync();
             return cinema;
         }
         public async Task<Cinema> AddWithImageUplodaing(Cinema cinema)
@@ -60,5 +75,8 @@ namespace MovieLibrary.Services.Services
             }
             await _db.SaveChangesAsync();
         }
+
+
+
     }
 }

@@ -8,8 +8,8 @@ namespace MovieLibrary.Services.Exceptions
 {
     public sealed class ActorByIdNotFoundException : NotFoundException
     {
-        public ActorByIdNotFoundException(int id)
-            : base("Актер с данным id не найден", id)
+        public ActorByIdNotFoundException()
+            : base("Пользователь с данным id не найден")
         {
         }
     }

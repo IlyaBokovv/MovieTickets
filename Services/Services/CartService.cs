@@ -20,13 +20,23 @@ namespace MovieLibrary.Services.Services
         }
         public async Task<Cart?> AddMovieToCartAsync(int movieId, string userId, string email)
         {
-            var cart = await GetUserCartAsync(userId, email);
+            var cartTask = await _db.Carts
+                .Where(c => c.UserId == userId && c.Email == email)
+                .Include(c => c.CartItems)
+                .FirstOrDefaultAsync();
+
             var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
             var movie = await _db.Movies.FirstOrDefaultAsync(m => m.Id == movieId);
+
+
+            var cart = cartTask;
+
             if (user == null)
             {
                 return null;
             }
+
             if (movie == null)
             {
                 return cart;
@@ -52,7 +62,7 @@ namespace MovieLibrary.Services.Services
                 }
                 _db.Carts.Entry(cart).State = EntityState.Modified;
                 await _db.SaveChangesAsync();
-                return cart;
+                return cartTask;
             }
             cart = new Cart
             {

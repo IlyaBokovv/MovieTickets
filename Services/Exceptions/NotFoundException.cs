@@ -9,13 +9,11 @@ namespace MovieLibrary.Services.Exceptions
 {
     public abstract class NotFoundException : Exception
     {
-        protected NotFoundException(string message, int id)
+        protected NotFoundException(string message)
             : base(message)
         {
-            Id = id;
         }
         public int StatusCode => (int)HttpStatusCode.NotFound;
-        public int Id { get; init; }
     }
 
 }

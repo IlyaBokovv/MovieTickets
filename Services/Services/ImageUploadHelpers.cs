@@ -18,8 +18,8 @@
 
         foreach (char c in inputChars)
         {
-            if (transliterationTable.ContainsKey(c))
-                outputChars.Add(transliterationTable[c]);
+            if (ImageUploadHelpers.transliterationTable.ContainsKey(c))
+                outputChars.Add(ImageUploadHelpers.transliterationTable[c]);
             else
                 outputChars.Add(c.ToString());
         }
