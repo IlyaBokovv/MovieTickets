@@ -44,7 +44,7 @@ namespace MovieLibraryWeb.Controllers
             {
                 return View(actorVM);
             }
-            await _actorService.AddActorWithImageUplodaing(actor);
+            await _actorService.AddActorWithImage(actor);
             return RedirectToAction(nameof(Index));
         }
         [AllowAnonymous]

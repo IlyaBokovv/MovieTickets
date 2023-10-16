@@ -30,35 +30,22 @@ namespace MovieLibrary.Services.Services
                 .Where(i => i.Id == actor.Id)
                 .Select(a => a.Image)
                 .FirstOrDefaultAsync();
-            if (oldImage == null)
+            if (actor.Image!.ImageFile is not null)
             {
-                throw new InvalidOperationException("invalid actor id");
-            }
-            if (actor.Image!.ImageFile == null)
-            {
-                actor.ImageId = oldImage.Id;
-                await UpdateAsync(actor);
+                _imageUploadService.Delete(oldImage.ImagePath);
+                actor.Image.ImagePath = await _imageUploadService.UploadAsync(actor.Image, nameof(Actor) + actor.FullName!,
+                    ImageType.Actor);
+                _db.Actors.Attach(actor);
+                _db.Images.Remove(oldImage);
+                await _db.Images.AddAsync(actor.Image);
+                await _db.SaveChangesAsync();
                 return actor;
-
             }
-            _imageUploadService.Delete(oldImage.ImagePath);
-
-            var imagePath = await _imageUploadService.UploadAsync(actor.Image, nameof(Actor) + actor.FullName!,
-                ImageType.Actor);
-            actor.Image.ImagePath = imagePath;
-
-
-            await _db.Images.AddAsync(actor.Image);
-            await _db.SaveChangesAsync();
-
-            actor.ImageId = actor.Image.Id;
-            _db.Actors.Entry(actor).State = EntityState.Modified;
-
-            _db.Images.Remove(oldImage);
-            await _db.SaveChangesAsync();
+            actor.ImageId = oldImage.Id;
+            await UpdateAsync(actor);
             return actor;
         }
-        public async Task<Actor> AddActorWithImageUplodaing(Actor actor)
+        public async Task<Actor> AddActorWithImage(Actor actor)
         {
             if (actor.Image.ImageFile is not null)
             {

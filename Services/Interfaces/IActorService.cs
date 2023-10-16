@@ -11,7 +11,7 @@ namespace Services.Interfaces
 {
     public interface IActorService : IRepositoryBase<Actor>
     {
-        public Task<Actor> AddActorWithImageUplodaing(Actor actor);
+        public Task<Actor> AddActorWithImage(Actor actor);
         public Task<Actor> UpdateActorWithImageAsync(Actor actor);
         public Task DeleteAsyncWithImage(Actor actor);
     }

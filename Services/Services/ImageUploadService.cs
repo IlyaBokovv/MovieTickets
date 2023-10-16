@@ -15,10 +15,13 @@ namespace MovieLibrary.Services.Services
         }
         public void Delete(string imagePath)
         {
-            string destinationOnServer = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot" + "/", imagePath);
-            if (File.Exists(destinationOnServer))
+            if(!imagePath.StartsWith("images/default"))
             {
-                File.Delete(destinationOnServer);
+                string destinationOnServer = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot" + "/", imagePath);
+                if (File.Exists(destinationOnServer))
+                {
+                    File.Delete(destinationOnServer);
+                }
             }
         }
         public async Task<string> UploadAsync(Image image, string imageId, string destination)
