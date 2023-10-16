@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/MovieLibraryWeb/wwwroot/images/actors/
+/MovieLibraryWeb/wwwroot/images/movies/
+/MovieLibraryWeb/wwwroot/images/cinemas/
+/MovieLibraryWeb/wwwroot/images/directors/
