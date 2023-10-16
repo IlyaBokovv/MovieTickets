@@ -9,6 +9,7 @@ using System.Data;
 using MovieLibrary.Models.Models;
 using System.Diagnostics;
 using System.Net;
+using MovieLibrary.Services.Exceptions;
 
 namespace MovieLibraryWeb.Controllers
 {
@@ -42,7 +43,7 @@ namespace MovieLibraryWeb.Controllers
             {
                 return View(movie);
             }
-            return View("NotFound");
+            throw new MovieByIdNotFoundException();
         }
 
         public async Task<IActionResult> Create()
@@ -81,7 +82,7 @@ namespace MovieLibraryWeb.Controllers
                 .GetByIdWithInclusionAsync(id);
             if (movie == null)
             {
-                return View("NotFound");
+                throw new MovieByIdNotFoundException();
             }
 
             var actors = await _actorService.GetAllAsync();
@@ -144,7 +145,7 @@ namespace MovieLibraryWeb.Controllers
             var movie = await _movieService.GetByIdAsync(id, trackChanges: false, m => m.Image);
             if (movie == null)
             {
-                return View("NotFound");
+                throw new MovieByIdNotFoundException();
             }
             return View(movie);
         }

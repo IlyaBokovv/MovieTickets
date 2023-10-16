@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MovieLibrary.DataAccess;
 using MovieLibraryWeb.Configuration;
+using MovieLibraryWeb.Middlewares;
 using mvc.Data.DataSeed;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,9 +18,8 @@ builder.Services.AddMyServices();
 
 var app = builder.Build();
 
-app.UseExceptionHandler("/Error");
 app.UseStatusCodePagesWithReExecute("/Error/{0}");
-app.UseHsts();
+app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
 await DataSeeding.SeedAsync(app);
 await DataSeeding.SeedUsersAndRolesAsync(app);

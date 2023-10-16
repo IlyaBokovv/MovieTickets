@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieLibrary.Models.Models;
 using MovieLibrary.Models.ViewModels;
+using MovieLibrary.Services.Exceptions;
 using MovieLibrary.Services.Interfaces;
 
 namespace MovieLibraryWeb.Controllers
@@ -28,7 +29,7 @@ namespace MovieLibraryWeb.Controllers
             {
                 return View(director);
             }
-            return View("NotFound");
+            throw new DirectorByIdNotFoundException();
         }
 
         public IActionResult Create()
@@ -58,7 +59,7 @@ namespace MovieLibraryWeb.Controllers
             var director = await _directorService.GetByIdAsync(id, trackChanges: false, d => d.Image);
             if (director == null)
             {
-                return View("NotFound");
+                throw new DirectorByIdNotFoundException();
             }
             return View(director);
         }
@@ -79,7 +80,7 @@ namespace MovieLibraryWeb.Controllers
             var director = await _directorService.GetByIdAsync(id, trackChanges: false, d => d.Image);
             if (director == null)
             {
-                return View("NotFound");
+                throw new DirectorByIdNotFoundException();
             }
             return View(director);
         }
@@ -90,7 +91,7 @@ namespace MovieLibraryWeb.Controllers
             var director = await _directorService.GetByIdAsync(id, trackChanges: false, d => d.Image);
             if (director == null)
             {
-                return View("NotFound");
+                throw new DirectorByIdNotFoundException();
             }
             await _directorService.DeleteAsyncWithImage(director);
             return RedirectToAction(nameof(Index));

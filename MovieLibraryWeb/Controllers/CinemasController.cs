@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieLibrary.Models.Models;
 using MovieLibrary.Models.Static;
 using MovieLibrary.Models.ViewModels;
+using MovieLibrary.Services.Exceptions;
 using MovieLibrary.Services.Interfaces;
 
 namespace mvc.Controllers
@@ -14,7 +15,7 @@ namespace mvc.Controllers
 
         public CinemasController(ICinemaService cinemaService)
         {
-            this._cinemaService = cinemaService;
+            _cinemaService = cinemaService;
         }
         public async Task<IActionResult> Index()
         {
@@ -29,7 +30,7 @@ namespace mvc.Controllers
             {
                 return View(cinema);
             }
-            return View("NotFound");
+            throw new CinemaByIdNotFoundException();
         }
 
         public IActionResult Create()
@@ -59,7 +60,7 @@ namespace mvc.Controllers
             var cinema = await _cinemaService.GetByIdAsync(id, trackChanges: false, d => d.Image);
             if (cinema == null)
             {
-                return View("NotFound");
+                throw new CinemaByIdNotFoundException();
             }
             return View(cinema);
         }
@@ -80,7 +81,7 @@ namespace mvc.Controllers
             var cinema = await _cinemaService.GetByIdAsync(id, trackChanges: false, d => d.Image);
             if (cinema == null)
             {
-                return View("NotFound");
+                throw new CinemaByIdNotFoundException();
             }
             return View(cinema);
         }
@@ -90,7 +91,7 @@ namespace mvc.Controllers
             var cinema = await _cinemaService.GetByIdAsync(id, trackChanges: false, d => d.Image);
             if (cinema == null)
             {
-                return View("NotFound");
+                throw new CinemaByIdNotFoundException();
             }
             await _cinemaService.DeleteAsyncWithImage(cinema);
             return RedirectToAction(nameof(Index));

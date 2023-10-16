@@ -12,8 +12,6 @@ namespace MovieLibraryWeb.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-
-
         public AccountController(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager)
         {
@@ -31,32 +29,22 @@ namespace MovieLibraryWeb.Controllers
         {
             if (!ModelState.IsValid) return View(loginVM);
             var user = await _userManager.FindByEmailAsync(loginVM.Email);
-            if (user == null)
-            {
-                TempData["Error"] = "Логин или пароль введен неверно";
-                return View(loginVM);
-            }
             var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
-            if (passwordCheck == false)
-            {
-                TempData["Error"] = "Логин или пароль введен неверно";
-                return View(loginVM);
-            }
             var loginRes = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
-            if (!loginRes.Succeeded)
+            if (user is null ||
+                !passwordCheck ||
+                !loginRes.Succeeded)
             {
                 TempData["Error"] = "Логин или пароль введен неверно";
                 return View(loginVM);
             }
             return RedirectToAction(actionName: "Index", controllerName: "Movies");
         }
-
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
-
         [HttpGet]
         public IActionResult Register() => View(new RegisterVM());
 
@@ -88,10 +76,10 @@ namespace MovieLibraryWeb.Controllers
                     City = registerVM.City,
                 }
             };
-            var res = await _userManager.CreateAsync(user, registerVM.Password);
-            if (!res.Succeeded)
+            var result = await _userManager.CreateAsync(user, registerVM.Password);
+            if (!result.Succeeded)
             {
-                TempData["Error"] = string.Join("\n", res.Errors.Select(e => e.Description));
+                TempData["Error"] = string.Join("\n", result.Errors.Select(e => e.Description));
                 return View(registerVM);
             }
             var roleAssignRes = await _userManager.AddToRoleAsync(user, UserRolesValues.User);

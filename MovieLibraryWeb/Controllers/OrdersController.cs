@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieLibrary.Models.Models;
 using MovieLibrary.Models.Static;
 using MovieLibrary.Models.ViewModels;
+using MovieLibrary.Services.Exceptions;
 using MovieLibrary.Services.Interfaces;
 using Services.Interfaces;
 using System.Data;
@@ -28,7 +29,7 @@ namespace MovieLibraryWeb.Controllers
             var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
             if (userId == null || userEmail == null)
             {
-                return View("NotFound");
+                throw new UserByIdOrEmailNotFoundException();
             }
             var orders = await _orderService.
                 GetUserOrdersAsync(userId, userEmail);
@@ -50,7 +51,7 @@ namespace MovieLibraryWeb.Controllers
             var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
             if (userId == null || userEmail == null)
             {
-                return View("NotFound");
+                throw new UserByIdOrEmailNotFoundException();
             }
             var cart = await _cartService.GetUserCartAsync(userId, userEmail);
             if (cart == null)
@@ -70,12 +71,12 @@ namespace MovieLibraryWeb.Controllers
             var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
             if (userId == null || userEmail == null)
             {
-                return View("NotFound");
+                throw new UserByIdOrEmailNotFoundException();
             }
             var cart = await _cartService.AddMovieToCartAsync(id, userId, userEmail);
             if (cart == null)
             {
-                return View("NotFound");
+                throw new CartByIdNotFoundException();
             }
             return RedirectToAction(nameof(Index));
         }
@@ -86,7 +87,7 @@ namespace MovieLibraryWeb.Controllers
 
             if (userId == null || userEmail == null)
             {
-                return View("NotFound");
+                throw new UserByIdOrEmailNotFoundException();
             }
             var cart = await _cartService.RemoveMovieFromCartAsync(id, userId, userEmail);
             return RedirectToAction(nameof(Index));
@@ -98,14 +99,7 @@ namespace MovieLibraryWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> MarkDone(int id)
         {
-            try
-            {
-                await _orderService.MarkAsDone(id);
-            }
-            catch (Exception ex)
-            {
-                return View("NotFound");
-            }
+            await _orderService.MarkAsDone(id);
             return RedirectToAction("ListAll");
         }
         
@@ -118,7 +112,7 @@ namespace MovieLibraryWeb.Controllers
                 var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
                 if (userId == null || userEmail == null)
                 {
-                    return View("NotFound");
+                    throw new UserByIdOrEmailNotFoundException();
                 }
                 var cart = await _cartService.GetUserCartAsync(userId, userEmail);
                 if (cart == null)

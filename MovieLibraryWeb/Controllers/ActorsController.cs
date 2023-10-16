@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieLibrary.Models.Models;
 using MovieLibrary.Models.Static;
 using MovieLibrary.Models.ViewModels;
+using MovieLibrary.Services.Exceptions;
 using Services.Interfaces;
 using System.Data;
 
@@ -16,8 +17,8 @@ namespace MovieLibraryWeb.Controllers
 
         public ActorsController(IActorService actorService, IWebHostEnvironment hostEnvironment)
         {
-            this._actorService = actorService;
-            this._hostEnvironment = hostEnvironment;
+            _actorService = actorService;
+            _hostEnvironment = hostEnvironment;
         }
 
         public async Task<IActionResult> Index()
@@ -53,18 +54,17 @@ namespace MovieLibraryWeb.Controllers
             var actor = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
             if (actor == null)
             {
-                return View("NotFound");
+                throw new ActorByIdNotFoundException();
             }
             return View(actor);
         }
-
 
         public async Task<IActionResult> Edit(int id)
         {
             var actor = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
             if (actor == null)
             {
-                return View("NotFound");
+                throw new ActorByIdNotFoundException();
             }
             return View(actor);
         }
@@ -84,7 +84,7 @@ namespace MovieLibraryWeb.Controllers
             var actor = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
             if (actor == null)
             {
-                return View("NotFound");
+                throw new ActorByIdNotFoundException();
             }
             return View(actor);
         }
@@ -94,7 +94,7 @@ namespace MovieLibraryWeb.Controllers
             var actor = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
             if (actor == null)
             {
-                return View("NotFound");
+                throw new ActorByIdNotFoundException();
             }
             await _actorService.DeleteAsyncWithImage(actor);
             return RedirectToAction(nameof(Index));
