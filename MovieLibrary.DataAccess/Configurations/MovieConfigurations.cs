@@ -17,6 +17,9 @@ namespace MovieLibrary.DataAccess.Configurations
             builder.Property(m => m.EndDate).IsRequired();
             builder.Property(m => m.StratDate).IsRequired();
 
+            builder.Property(p => p.Price)
+                .HasColumnType("decimal(18,4)");
+
             builder.HasOne(m => m.Director)
                 .WithMany(p => p.Movies)
                 .HasForeignKey(m => m.DirectorId)

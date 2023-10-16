@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /MovieLibraryWeb/wwwroot/images/movies/
 /MovieLibraryWeb/wwwroot/images/cinemas/
 /MovieLibraryWeb/wwwroot/images/directors/
+/MovieLibraryWeb/appsettings.json

@@ -13,6 +13,8 @@ namespace MovieLibrary.DataAccess.Configurations
             builder.Property(oi => oi.Price).IsRequired();
             builder.Property(oi => oi.Amount).IsRequired();
 
+            builder.Property(p => p.Price)
+                .HasColumnType("decimal(18,4)");
 
             builder.HasOne(oi => oi.Movie)
                 .WithMany()
