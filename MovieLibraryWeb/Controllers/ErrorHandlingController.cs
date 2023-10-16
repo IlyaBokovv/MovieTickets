@@ -11,18 +11,10 @@ namespace MovieLibraryWeb.Controllers
             ViewBag.ErrorMessage = statusCode switch
             {
                 404 => "Запрашиваемая Вами страница не найдена",
-                500 => "Произошла ошибка при обработке Вашего запроса, наша команда уже работает над устранением ошибки.",
+                500 => "Произошла ошибка при обработке Вашего запроса, наша команда уже работает над ее устранением.",
                 _ => "Произошла непредвиденная ошибка.",
             };
             return View("HttpStatusCodeHandler");
-        }
-
-        [HttpGet("/Error")]
-        public IActionResult Error()
-        {
-            var exceptionFeature = HttpContext.Features.Get<IExceptionHandlerFeature>();
-            ViewBag.ExceptionMessage = exceptionFeature?.Error.Message;
-            return View("Error");
         }
     }
 }
