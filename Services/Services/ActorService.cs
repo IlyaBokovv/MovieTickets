@@ -38,6 +38,7 @@ namespace MovieLibrary.Services.Services
                 _db.Actors.Attach(actor);
                 _db.Images.Remove(oldImage);
                 await _db.Images.AddAsync(actor.Image);
+                await UpdateAsync(actor);
                 await _db.SaveChangesAsync();
                 return actor;
             }
@@ -47,12 +48,11 @@ namespace MovieLibrary.Services.Services
         }
         public async Task<Actor> AddActorWithImage(Actor actor)
         {
-            if (actor.Image.ImageFile is not null)
+            if (actor.Image!.ImageFile is not null)
             {
                 var imagePath = await _imageUploadService.UploadAsync(actor.Image, nameof(Actor) + actor.FullName!, ImageType.Actor);
                 actor.Image.ImagePath = imagePath;
             }
-
             await _db.Actors.AddAsync(actor);
             await _db.SaveChangesAsync();
             return actor;

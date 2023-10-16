@@ -30,14 +30,12 @@ namespace MovieLibraryWeb.Controllers
             if (!ModelState.IsValid) return View(loginVM);
             var user = await _userManager.FindByEmailAsync(loginVM.Email);
             var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
-            var loginRes = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
-            if (user is null ||
-                !passwordCheck ||
-                !loginRes.Succeeded)
+            if (user is null || !passwordCheck)
             {
                 TempData["Error"] = "Логин или пароль введен неверно";
                 return View(loginVM);
             }
+            await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
             return RedirectToAction(actionName: "Index", controllerName: "Movies");
         }
         public async Task<IActionResult> Logout()
@@ -56,7 +54,7 @@ namespace MovieLibraryWeb.Controllers
                 return View(registerVM);
             }
             var u = await _userManager.FindByEmailAsync(registerVM.Email);
-            if (u != null)
+            if (u is not null)
             {
                 TempData["Error"] = "Пользователь с введенным email адресом уже зарегистрирован";
                 return View(registerVM);

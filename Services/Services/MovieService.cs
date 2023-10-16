@@ -4,7 +4,9 @@ using MovieLibrary.DataAccess.Repository;
 using MovieLibrary.Models.Models;
 using MovieLibrary.Models.Static;
 using MovieLibrary.Models.ViewModels;
+using MovieLibrary.Services.Exceptions;
 using MovieLibrary.Services.Interfaces;
+using NuGet.Packaging.Signing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +28,15 @@ namespace MovieLibrary.Services.Services
 
         public async Task<Movie> AddMovieVMAsync(MovieVM movieVM)
         {
-            var directorTask = await _db.Directors.FirstOrDefaultAsync(d => d.Id == movieVM.DirectorId);
-            var cinemaTask = await _db.Cinemas.FirstOrDefaultAsync(d => d.Id == movieVM.CinemaId);
-            if (directorTask is null || cinemaTask is null)
+            var director = await _db.Directors.FirstOrDefaultAsync(d => d.Id == movieVM.DirectorId);
+            var cinema = await _db.Cinemas.FirstOrDefaultAsync(d => d.Id == movieVM.CinemaId);
+            if (director is null)
             {
-                throw new InvalidOperationException("cinema or director is is not valid");
+                throw new DirectorByIdNotFoundException(movieVM.DirectorId);
+            }
+            if (cinema is null)
+            {
+                throw new CinemaByIdNotFoundException(movieVM.DirectorId);
             }
             var movie = new Movie
             {
@@ -41,53 +47,42 @@ namespace MovieLibrary.Services.Services
                 EndDate = movieVM.EndDate,
                 MovieCategory = movieVM.MovieCategory,
                 DirectorId = movieVM.DirectorId,
-                Director = directorTask,
+                Director = director,
                 CinemaId = movieVM.CinemaId,
-                Cinema = cinemaTask
+                Cinema = cinema
             };
             movie.Image.ImageFile = movieVM.Image.ImageFile;
-            try
+            if (movie.Image.ImageFile != null)
             {
-                if (movie.Image.ImageFile != null)
-                {
-                    var imagePath = await _imageUploadService.UploadAsync(movie.Image, nameof(Movie) + movie.Name, ImageType.Movies);
-                    movie.Image.ImagePath = imagePath;
-                }
-                await _db.Movies.AddAsync(movie);
-                await _db.SaveChangesAsync();
-
-                var actors = await GetActorsByIds(movieVM.ActorIds);
-
-                foreach (var actor in actors)
-                {
-                    var actorMovie = new ActorMovie
-                    {
-                        ActorId = actor.Id,
-                        MovieId = movie.Id,
-                        Movie = movie,
-                        Actor = actor
-                    };
-                    await _db.AddAsync(actorMovie);
-                }
-                _db.SaveChanges();
+                var imagePath = await _imageUploadService.UploadAsync(movie.Image, nameof(Movie) + movie.Name, ImageType.Movies);
+                movie.Image.ImagePath = imagePath;
             }
-            catch (Exception ex)
+            await _db.Movies.AddAsync(movie);
+            var actors = await _db.Actors
+            .Where(a => movieVM.ActorIds.Contains(a.Id))
+            .ToListAsync();
+            foreach (var actor in actors)
             {
-                await _db.DisposeAsync();
-                throw new Exception("Failed to add movie, please try again.", ex);
+                var actorMovie = new ActorMovie
+                {
+                    ActorId = actor.Id,
+                    MovieId = movie.Id,
+                    Movie = movie,
+                    Actor = actor
+                };
+                await _db.AddAsync(actorMovie);
             }
+            _db.SaveChanges();
             return movie;
         }
 
         public async Task<Movie?> UpdateMovieVMAsync(MovieVM movieVM)
         {
-
             var oldMovie = await GetByIdWithInclusionAsync(movieVM.Id);
             if (oldMovie == null)
             {
                 return null;
             }
-
             var existingActorMovies = oldMovie.ActorsMovies!.Where(am => am.MovieId == oldMovie.Id);
             _db.ActorMovies.RemoveRange(existingActorMovies);
             await _db.SaveChangesAsync();
@@ -116,27 +111,21 @@ namespace MovieLibrary.Services.Services
             }
             await _db.SaveChangesAsync();
 
-            var actors = await GetActorsByIds(movieVM.ActorIds);
-            try
+            var actors = await _db.Actors
+            .Where(a => movieVM.ActorIds.Contains(a.Id))
+            .ToListAsync();
+            foreach (var actor in actors)
             {
-                foreach (var actor in actors)
+                var actorMovie = new ActorMovie
                 {
-                    var actorMovie = new ActorMovie
-                    {
-                        ActorId = actor.Id,
-                        MovieId = oldMovie.Id,
-                        Movie = oldMovie,
-                        Actor = actor
-                    };
-                    await _db.ActorMovies.AddAsync(actorMovie);
-                }
-                _db.SaveChanges();
+                    ActorId = actor.Id,
+                    MovieId = oldMovie.Id,
+                    Movie = oldMovie,
+                    Actor = actor
+                };
+                await _db.ActorMovies.AddAsync(actorMovie);
             }
-            catch (Exception ex)
-            {
-                await _db.DisposeAsync();
-                throw new Exception("Failed to add movie, please try again.", ex);
-            }
+            _db.SaveChanges();
             return oldMovie;
         }
 
@@ -157,10 +146,9 @@ namespace MovieLibrary.Services.Services
             var movie = await _db.Movies
                 .Include(m => m.Image)
                 .FirstOrDefaultAsync(m => m.Id == movieId);
-
             if (movie == null)
             {
-                throw new InvalidOperationException("invalid movie id");
+                throw new MovieByIdNotFoundException(movieId);
             }
             _db.Movies.Remove(movie);
             if (movie.Image != null)
@@ -169,19 +157,6 @@ namespace MovieLibrary.Services.Services
                 _imageUploadService.Delete(movie.Image.ImagePath);
             }
             await _db.SaveChangesAsync();
-        }
-        private async Task<IEnumerable<Actor>> GetActorsByIds(IEnumerable<int> ids)
-        {
-            var result = new List<Actor>();
-            foreach (var id in ids)
-            {
-                var a = await _db.Actors.FindAsync(id);
-                if (a != null)
-                {
-                    result.Add(a);
-                }
-            }
-            return result;
         }
     }
 }

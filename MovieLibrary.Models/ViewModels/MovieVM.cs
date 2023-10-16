@@ -14,6 +14,7 @@ namespace MovieLibrary.Models.ViewModels
         public string Name { get; init; } = "";
 
         [Required(ErrorMessage = "Цена обязательна для заполнения")]
+        [Range(100, int.MaxValue, ErrorMessage ="Цена должна начинаться от 100")]
         [Display(Name = "Цена в ₽")]
         public decimal Price { get; init; }
 
@@ -23,11 +24,11 @@ namespace MovieLibrary.Models.ViewModels
 
         [Required(ErrorMessage = "Время начала показа обязательно для заполнения")]
         [Display(Name = "Время начала показа")]
-        public DateTime StartDate { get; init; }
+        public DateTime StartDate { get; init; } = DateTime.Now;
 
         [Required(ErrorMessage = "Дата окончания показа обязательна для заполнения ")]
         [Display(Name = "Дата окончания показа")]
-        public DateTime EndDate { get; init; }
+        public DateTime EndDate { get; init; } = DateTime.Now.AddDays(7);
 
         [Required(ErrorMessage = "Жанр обязателен для заполнения")]
         [Display(Name = "Жанр")]

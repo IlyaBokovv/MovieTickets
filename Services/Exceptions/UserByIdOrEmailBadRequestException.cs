@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary.Services.Exceptions
 {
-    public sealed class DirectorByIdNotFoundException : NotFoundException
+    public sealed class UserByIdOrEmailBadRequestException : BadRequestExeption
     {
-        public DirectorByIdNotFoundException(int id)
+        public UserByIdOrEmailBadRequestException(string id)
             : base("Пользователь с данным id не найден", id)
         {
         }

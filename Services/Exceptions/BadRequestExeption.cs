@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary.Services.Exceptions
 {
-    public abstract class NotFoundException : Exception
+    public abstract class BadRequestExeption : Exception
     {
-        protected NotFoundException(string message, int id)
+        protected BadRequestExeption(string message, string id)
             : base(message)
         {
             Id = id;
         }
         public int StatusCode => (int)HttpStatusCode.NotFound;
-        public int Id { get; init; }
+        public string Id { get; init; }
     }
 
 }

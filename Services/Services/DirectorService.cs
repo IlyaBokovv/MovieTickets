@@ -5,6 +5,7 @@ using MovieLibrary.DataAccess.Repository;
 using MovieLibrary.DataAccess;
 using MovieLibrary.Models.Static;
 using MovieLibrary.Models.ViewModels;
+using MovieLibrary.Services.Exceptions;
 
 namespace MovieLibrary.Services.Services
 {
@@ -21,39 +22,24 @@ namespace MovieLibrary.Services.Services
         }
         public async Task<Director> UpdateDirectorWithImageAsync(Director director)
         {
-            var oldImage = await _db.Directors.Include(a => a.Image)
+            var oldImage = await _db.Cinemas.Include(a => a.Image)
                 .Where(i => i.Id == director.Id)
                 .Select(a => a.Image)
                 .FirstOrDefaultAsync();
-            if (oldImage == null)
+            if (director.Image!.ImageFile is not null)
             {
-                throw new InvalidOperationException("invalid director id");
-            }
-            if (director.Image.ImageFile == null)
-            {
-                director.ImageId = oldImage.Id;
+                _imageUploadService.Delete(oldImage.ImagePath);
+                director.Image.ImagePath = await _imageUploadService.UploadAsync(director.Image, nameof(Director) + director.FullName!,
+                    ImageType.Cinemas);
+                _db.Directors.Attach(director);
+                _db.Images.Remove(oldImage);
+                await _db.Images.AddAsync(director.Image);
                 await UpdateAsync(director);
+                await _db.SaveChangesAsync();
                 return director;
-
             }
-            _imageUploadService.Delete(oldImage.ImagePath);
-
-            var imagePath = await _imageUploadService.UploadAsync(
-                director.Image,
-                nameof(Director) + director.FullName!,
-                ImageType.Directors);
-            director.Image.ImagePath = imagePath;
-
-
-            await _db.Images.AddAsync(director.Image);
-            await _db.SaveChangesAsync();
-
-            director.ImageId = director.Image.Id;
-            _db.Directors.Entry(director).State = EntityState.Modified;
-            await _db.SaveChangesAsync();
-
-            _db.Images.Remove(oldImage);
-            await _db.SaveChangesAsync();
+            director.ImageId = oldImage.Id;
+            await UpdateAsync(director);
             return director;
         }
         public async Task<Director> AddDirectorWithImageUplodaing(Director director)

@@ -25,11 +25,11 @@ namespace MovieLibraryWeb.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var director = await _directorService.GetByIdAsync(id, trackChanges: false, d => d.Image);
-            if (director != null)
+            if (director is null)
             {
-                return View(director);
+                throw new DirectorByIdNotFoundException(id);
             }
-            throw new DirectorByIdNotFoundException();
+            return View(director);
         }
 
         public IActionResult Create()
@@ -57,9 +57,9 @@ namespace MovieLibraryWeb.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var director = await _directorService.GetByIdAsync(id, trackChanges: false, d => d.Image);
-            if (director == null)
+            if (director is null)
             {
-                throw new DirectorByIdNotFoundException();
+                throw new DirectorByIdNotFoundException(id);
             }
             return View(director);
         }
@@ -78,9 +78,9 @@ namespace MovieLibraryWeb.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var director = await _directorService.GetByIdAsync(id, trackChanges: false, d => d.Image);
-            if (director == null)
+            if (director is null)
             {
-                throw new DirectorByIdNotFoundException();
+                throw new DirectorByIdNotFoundException(id);
             }
             return View(director);
         }
@@ -89,9 +89,9 @@ namespace MovieLibraryWeb.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var director = await _directorService.GetByIdAsync(id, trackChanges: false, d => d.Image);
-            if (director == null)
+            if (director is null)
             {
-                throw new DirectorByIdNotFoundException();
+                throw new DirectorByIdNotFoundException(id);
             }
             await _directorService.DeleteAsyncWithImage(director);
             return RedirectToAction(nameof(Index));
