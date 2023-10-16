@@ -30,7 +30,6 @@ namespace MovieLibraryWeb.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            throw new Exception("HAHAHAHA");
             var movies = await _movieService.GetAllAsync(trackChanges: false, n => n.Cinema, m => m.Image);
             return View(movies);
         }
