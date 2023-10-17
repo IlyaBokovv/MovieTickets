@@ -25,11 +25,9 @@ builder.Host.UseSerilog((ctx, lc) => lc
 var app = builder.Build();
 
 app.GlobalExceptionHandling();
-if (app.Environment.IsDevelopment())
-{
-    await DataSeeding.SeedAsync(app);
-    await DataSeeding.SeedUsersAndRolesAsync(app);
-}
+
+await DataSeeding.SeedAsync(app);
+await DataSeeding.SeedUsersAndRolesAsync(app);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
