@@ -366,3 +366,6 @@ FodyWeavers.xsd
 /MovieLibraryWeb/wwwroot/images/cinemas/
 /MovieLibraryWeb/wwwroot/images/directors/
 /MovieLibraryWeb/appsettings.json
+/docker-compose.dcproj
+/MovieLibraryWeb/appsettings.json
+/.env

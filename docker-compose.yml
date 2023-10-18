@@ -1,0 +1,42 @@
+version: '3.8'
+networks:
+  movielibrary:
+    driver: bridge
+services:
+  app:
+    container_name: movieticketswebapp
+    image: movielibraryweb
+    build:
+      context: .
+      dockerfile: MovieLibraryWeb/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - movielibrary
+    depends_on:
+      - mssql
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=mssqlserver;Database=Movie;User=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;"
+    volumes:
+     - temp-keys:/root/.aspnet/DataProtection-Keys
+     - images:/wwwroot/images/
+     - logs:/app/logs/ 
+    command: ["dotnet", "MovieLibraryWeb.dll"]
+  mssql:
+    container_name: mssqlserver
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: ${DB_PASSWORD}
+      ACCEPT_EULA: Y
+    ports:
+      - "1433:1433"
+    networks:
+      - movielibrary
+    volumes:
+      - sqlvolume:/var/opt/mssql
+volumes:
+  sqlvolume:
+  temp-keys:
+  images: 
+  logs:
