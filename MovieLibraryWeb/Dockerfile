@@ -8,7 +8,7 @@ WORKDIR /src
 COPY ["MovieLibraryWeb/MovieLibraryWeb.csproj", "MovieLibraryWeb/"]
 COPY ["MovieLibrary.DataAccess/MovieLibrary.DataAccess.csproj", "MovieLibrary.DataAccess/"]
 COPY ["MovieLibrary.Models/MovieLibrary.Models.csproj", "MovieLibrary.Models/"]
-COPY ["Services/MovieLibrary.Services.csproj", "Services/"]
+COPY ["MovieLibrary.Services/MovieLibrary.Services.csproj", "MovieLibrary.Services/"]
 RUN dotnet restore "MovieLibraryWeb/MovieLibraryWeb.csproj"
 COPY . .
 WORKDIR "/src/MovieLibraryWeb"

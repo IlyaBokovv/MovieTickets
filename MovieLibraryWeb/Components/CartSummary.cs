@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MovieLibrary.Services.Interfaces;
 using Services.Interfaces;
 using System.Security.Claims;
 

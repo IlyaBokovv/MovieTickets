@@ -20,7 +20,7 @@ services:
       ConnectionStrings__DefaultConnection: "Server=mssqlserver;Database=Movie;User=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;"
     volumes:
      - temp-keys:/root/.aspnet/DataProtection-Keys
-     - images:/wwwroot/images/
+     - images:/app/wwwroot/images/
      - logs:/app/logs/ 
     command: ["dotnet", "MovieLibraryWeb.dll"]
   mssql:
