@@ -13,7 +13,7 @@ git clone https://github.com/IlyaBokovv/MovieTickets.git
 ```
 ### Second step:
 ```
-Change ConnectionString in `appsettings.json` and 
+Change ConnectionString in appsettings.json
 ```
 ### Third step:
 ```
