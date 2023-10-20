@@ -17,7 +17,7 @@ Change ConnectionString in `appsettings.json` and
 ```
 ### Third step:
 ```
-dotnet run --project MovieTickets
+dotnet run --project MovieLibraryWeb
 ```
 ## via Docker
 ### First step: 
