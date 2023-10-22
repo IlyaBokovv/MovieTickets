@@ -25,26 +25,17 @@ namespace MovieLibraryWeb.Middlewares
             }
             catch (BadRequestExeption ex)
             {
-                if (context.Request.Path.ToString().Contains("/Error"))
-                {
-                    _logger.LogError($"{ex.Message}, {ex.Id}");
-                }
+                _logger.LogError($"{ex.Message}, {ex.Id}");
                 context.Response.StatusCode = ex.StatusCode;
             }
             catch (NotFoundException ex)
             {
-                if (context.Request.Path.ToString().Contains("/Error"))
-                {
-                    _logger.LogError($"{ex.Message}, {ex.Id}");
-                }
+                _logger.LogError($"{ex.Message}, {ex.Id}");
                 context.Response.StatusCode = ex.StatusCode;
             }
             catch (Exception ex)
             {
-                if (context.Request.Path.ToString().Contains("/Error"))
-                {
-                    _logger.LogCritical(ex.ToString());
-                }
+                _logger.LogCritical("Something really bad happen");
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
         }

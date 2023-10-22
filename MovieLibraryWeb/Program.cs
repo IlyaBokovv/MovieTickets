@@ -24,6 +24,10 @@ builder.Host.UseSerilog((ctx, lc) => lc
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging(config =>
+{
+    config.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000} ms";
+});
 app.GlobalExceptionHandling();
 
 await DataSeeding.SeedAsync(app);
@@ -38,7 +42,6 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseSerilogRequestLogging();
 
 app.MapControllerRoute(
     name: "default",
