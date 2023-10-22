@@ -16,7 +16,7 @@ namespace MovieLibraryWeb.Controllers
     {
         private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
-        private readonly string clientId;
+        private readonly string? clientId;
 
         public OrdersController(ICartService cartService, IOrderService orderService)
         {
