@@ -30,7 +30,8 @@ namespace MovieLibraryWeb.Controllers
             if (!ModelState.IsValid) return View(loginVM);
             var user = await _userManager.FindByEmailAsync(loginVM.Email);
             var passwordCheck = await _userManager.CheckPasswordAsync(user!, loginVM.Password);
-            if (user is null || !passwordCheck)
+            if (user is null ||
+                !passwordCheck)
             {
                 TempData["Error"] = "Логин или пароль введен неверно";
                 return View(loginVM);
