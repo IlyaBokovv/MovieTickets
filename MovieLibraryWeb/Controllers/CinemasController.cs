@@ -44,7 +44,7 @@ namespace mvc.Controllers
             var cinema = new Cinema
             {
                 Name = cinemaVM.Name,
-                Description = cinemaVM.Description,
+                Description = cinemaVM.Description!,
                 Image = new Image() { ImageFile = cinemaVM.Image.ImageFile }
             };
             if (!ModelState.IsValid)
