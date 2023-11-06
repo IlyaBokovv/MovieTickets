@@ -20,7 +20,7 @@ namespace MovieLibrary.DataAccess
         public DbSet<Image> Images => Set<Image>();
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            Database.Migrate();
+            //Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
